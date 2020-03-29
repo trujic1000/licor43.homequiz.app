@@ -1,12 +1,15 @@
 import React from "react";
-import { Header, HeaderQuiz } from "~/components/header";
+import { HeaderQuiz } from "~/components/header";
+import { withTranslation } from "../i18n";
 
 const Index = () => (
-	<React.Fragment>
+	<div>
 		<HeaderQuiz />
-	</React.Fragment>
+	</div>
 );
 
-// Index.getInitialProps = async () => {};
+Index.getInitialProps = async () => ({
+	namespacesRequired: ["common", "menu"]
+});
 
-export default Index;
+export default withTranslation("menu")(Index);

@@ -6,6 +6,7 @@ import Head from "next/head";
 import App from "next/app";
 import reset from "styled-reset";
 import { css, createGlobalStyle, ThemeProvider } from "styled-components";
+import { appWithTranslation } from "../i18n";
 
 import { initializeStore } from "../store";
 
@@ -16,7 +17,6 @@ const theme = {
 		white: "#FFF"
 	}
 };
-
 const fontFaces = css`
 	@font-face {
 		font-family: "Hurme Geometric";
@@ -84,6 +84,10 @@ const GlobalStyle = createGlobalStyle`
 		line-height: 1.5;
 		font-family: "Hurme Geometric", sans-serif;
 	}
+
+	a {
+		text-decoration: none;
+	}
 `;
 
 class MyApp extends App {
@@ -121,4 +125,4 @@ class MyApp extends App {
 	}
 }
 
-export default withRedux(initializeStore)(MyApp);
+export default withRedux(initializeStore)(appWithTranslation(MyApp));

@@ -96,7 +96,7 @@ const MenuLogo = styled.div`
 
 const Menu = () => {
 	const [open, toggle] = useState(false);
-	const { t } = useTranslation(["common", "menu"], { i18n });
+	const { t } = useTranslation("menu", { i18n });
 	const user = useSelector(state => state.auth.user);
 	return (
 		<>
@@ -132,7 +132,7 @@ const Menu = () => {
 };
 
 Menu.getInitialProps = async () => ({
-	namespacesRequired: ["common", "menu"]
+	namespacesRequired: ["menu"]
 });
 
 export default Menu;

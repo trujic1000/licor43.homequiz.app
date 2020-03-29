@@ -1,8 +1,15 @@
 const NextI18Next = require("next-i18next").default;
 
-const NextI18NextInstance = new NextI18Next({
+const lanaguages = ["en", "es"];
+
+const instance = new NextI18Next({
+	localePath: "public/static/locales",
+	preload: ["en"],
 	defaultLanguage: "en",
-	otherLanguages: ["es"]
+	otherLanguages: ["es"],
+	fallbackLng: "en"
 });
 
-module.exports = NextI18NextInstance;
+instance.i18n.lanaguages = lanaguages;
+
+module.exports = instance;

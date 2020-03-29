@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-	background: ${props => props.theme.colors.secondary};
+	background: #151515;
 	display: flex;
 	align-items: center;
 	justify-content: center;
