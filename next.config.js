@@ -1,15 +1,24 @@
-const withOffline = require('next-offline')
+const path = require("path");
+const withPlugins = require("next-compose-plugins");
+const withImages = require("next-images");
+const withOffline = require("next-offline");
 
-module.exports = withOffline({
-	target: process.env.NEXT_TARGET || 'serverless',
+const nextConfig = {
+	webpack: config => {
+		config.resolve.alias["~"] = path.resolve(__dirname);
+		return config;
+	},
+	publicRuntimeConfig: {
+		BASE_URL: "https://admin.homequiz.app"
+	},
 	workboxOpts: {
-		swDest: 'static/service-worker.js',
+		swDest: "static/service-worker.js",
 		runtimeCaching: [
 			{
 				urlPattern: /[.](png|jpg|ico|css)/,
-				handler: 'CacheFirst',
+				handler: "CacheFirst",
 				options: {
-					cacheName: 'assets-cache',
+					cacheName: "assets-cache",
 					cacheableResponse: {
 						statuses: [0, 200]
 					}
@@ -17,18 +26,20 @@ module.exports = withOffline({
 			},
 			{
 				urlPattern: /^https:\/\/code\.getmdl\.io.*/,
-				handler: 'CacheFirst',
+				handler: "CacheFirst",
 				options: {
-					cacheName: 'lib-cache'
+					cacheName: "lib-cache"
 				}
 			},
 			{
 				urlPattern: /^http.*/,
-				handler: 'NetworkFirst',
+				handler: "NetworkFirst",
 				options: {
-					cacheName: 'http-cache'
+					cacheName: "http-cache"
 				}
 			}
 		]
 	}
-})
+};
+
+module.exports = withPlugins([[withOffline], [withImages]], nextConfig);

@@ -1,21 +1,12 @@
-import 'isomorphic-fetch'
-import React from 'react'
-import Fork from '../components/Fork'
-import Todo from '../components/Todo'
+import React from "react";
+import { Header, HeaderQuiz } from "~/components/header";
 
-const Index = ({ stars }) => (
+const Index = () => (
 	<React.Fragment>
-		<Fork stars={stars} />
-		<Todo />
+		<HeaderQuiz />
 	</React.Fragment>
-)
+);
 
-Index.getInitialProps = async () => {
-	const res = await fetch(
-		'https://api.github.com/repos/ooade/NextSimpleStarter'
-	)
-	const json = await res.json()
-	return { stars: json.stargazers_count }
-}
+// Index.getInitialProps = async () => {};
 
-export default Index
+export default Index;
