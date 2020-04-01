@@ -16,8 +16,8 @@ class MyDocument extends Document {
 						name="Description"
 						content="an example of NextJS app with 100% accessible lighthouse score"
 					/>
-					<link rel="manifest" href="manifest.json" />
-					<link rel="icon" href="img/favicon.ico" />
+					<link rel="manifest" href="/manifest.json" />
+					<link rel="icon" href="/img/favicon.ico" />
 				</Head>
 				<body>
 					<Main />

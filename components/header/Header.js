@@ -9,11 +9,13 @@ import Icon from "~/components/icon";
 
 const Wrapper = styled.header`
 	position: relative;
-	background-color: #000;
-	background: ${props =>
+	background-color: ${props => props.theme.colors.secondary};
+	background-image: ${props =>
 		props.size === "big" ? `url(${HeaderBgBig})` : `url(${HeaderBgSmall})`};
 	background-size: cover;
+	background-blend-mode: lighten;
 	height: 55px;
+	margin-bottom: 5px;
 	z-index: 5;
 
 	svg {

@@ -25,40 +25,40 @@ const fontFaces = css`
 	@font-face {
 		font-family: "Hurme Geometric";
 		src: local("Hurme Geometric"),
-			url("fonts/hurmegeometricsans4_bold-webfont.woff") format("woff");
+			url("/fonts/hurmegeometricsans4_bold-webfont.woff") format("woff");
 		font-weight: bold;
 		font-style: normal;
 	}
 	@font-face {
 		font-family: "Hurme Geometric";
 		src: local("Hurme Geometric"),
-			url("fonts/hurmegeometricsans4_light-webfont.woff") format("woff");
+			url("/fonts/hurmegeometricsans4_light-webfont.woff") format("woff");
 		font-weight: 300;
 		font-style: normal;
 	}
 	@font-face {
 		font-family: "Hurme Geometric";
 		src: local("Hurme Geometric"),
-			url("fonts/hurmegeometricsans4_semibold-webfont.woff") format("woff");
+			url("/fonts/hurmegeometricsans4_semibold-webfont.woff") format("woff");
 		font-weight: 500;
 		font-style: normal;
 	}
 	@font-face {
 		font-family: "Hurme Geometric";
 		src: local("Hurme Geometric"),
-			url("fonts/hurmegeometricsans4-webfont.woff") format("woff");
+			url("/fonts/hurmegeometricsans4-webfont.woff") format("woff");
 		font-weight: normal;
 		font-style: normal;
 	}
 	@font-face {
 		font-family: "Roboto";
-		src: local("Roboto"), url("fonts/Roboto-Regular.woff") format("woff");
+		src: local("Roboto"), url("/fonts/Roboto-Regular.woff") format("woff");
 		font-weight: normal;
 		font-style: normal;
 	}
 	@font-face {
 		font-family: "Roboto";
-		src: url("fonts/Roboto-Bold.woff") format("woff");
+		src: url("/fonts/Roboto-Bold.woff") format("woff");
 		font-weight: bold;
 		font-style: normal;
 	}
@@ -105,13 +105,6 @@ class MyApp extends App {
 					: {})
 			}
 		};
-	}
-
-	componentDidMount() {
-		if (process.env.NODE_ENV !== "production") {
-			const axe = require("react-axe");
-			axe(React, ReactDom, 1000);
-		}
 	}
 
 	render() {

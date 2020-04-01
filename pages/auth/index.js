@@ -127,7 +127,7 @@ const Auth = () => {
 				<div className="item item--4" />
 			</WelcomeLayout>
 			<ButtonWrap>
-				<Link href="/auth" onClick={() => console.log("Sign Up")}>
+				<Link href="/auth/sign-up" onClick={() => console.log("Sign Up")}>
 					{t("common:sign-up")}
 				</Link>
 				<Link

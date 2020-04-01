@@ -21,7 +21,7 @@ export const StyledLink = styled.a`
 	margin: 0 auto 10px auto;
 	background-color: ${props => props.theme.colors.primary};
 	color: ${props => props.theme.colors.secondary};
-	padding: 10px 35px;
+	padding: ${props => (props.as === "button" ? "12px 35px" : "10px 35px")};
 	text-align: center;
 	font-size: 15px;
 	font-family: "Roboto", sans-serif;
