@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 
 import HeaderBgBig from "~/assets/img/header-bg-big.png";
 import HeaderBgSmall from "~/assets/img/header-bg-small.png";
+import Icon from "~/components/icon";
 
 const Wrapper = styled.header`
 	position: relative;
@@ -13,8 +14,9 @@ const Wrapper = styled.header`
 		props.size === "big" ? `url(${HeaderBgBig})` : `url(${HeaderBgSmall})`};
 	background-size: cover;
 	height: 55px;
+	z-index: 5;
 
-	img {
+	svg {
 		width: 60px;
 		height: 60px;
 		position: absolute;
@@ -30,7 +32,7 @@ const Wrapper = styled.header`
 		props.size === "big" &&
 		css`
 			height: 110px;
-			img {
+			svg {
 				width: 200px;
 				height: 200px;
 				top: 97%;
@@ -46,10 +48,7 @@ const Header = ({ size }) => {
 		<Wrapper size={size}>
 			<Link href="/">
 				<a>
-					<img
-						src={size === "big" ? "/img/logo-quiz.svg" : "/img/logo.svg"}
-						alt="logo"
-					/>
+					<Icon name={size === "big" ? "logo" : "logo-alt"} />
 				</a>
 			</Link>
 		</Wrapper>

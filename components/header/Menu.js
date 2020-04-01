@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import Div100vh from "react-div-100vh";
 
 import Hamburger from "./Hamburger";
 import { useTranslation, i18n } from "~/i18n";
 import menuBg from "~/assets/img/menu-bg.png";
 
-const MenuWrapper = styled.div`
+const MenuWrapper = styled(Div100vh)`
 	background-color: #111;
 	position: fixed;
 	display: flex;
@@ -16,7 +17,6 @@ const MenuWrapper = styled.div`
 	right: 0;
 	top: 0;
 	width: 190px;
-	height: 100vh;
 	z-index: 5;
 	transition: all 300ms ease-in;
 	transform: translateX(100%);

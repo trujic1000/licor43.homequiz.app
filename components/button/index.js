@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 
-export const Button = styled.button`
+const Button = styled.a`
 	display: inline-block;
 	max-width: 240px;
 	width: 100%;
-	margin: 0 auto;
+	margin: 0 auto 10px auto;
 	background-color: ${props => props.theme.colors.primary};
 	color: ${props => props.theme.colors.secondary};
 	padding: 10px 35px;
@@ -80,3 +80,5 @@ export const Button = styled.button`
 			}
 		`}
 `;
+
+export default Button;

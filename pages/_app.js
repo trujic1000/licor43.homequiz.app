@@ -15,6 +15,10 @@ const theme = {
 		primary: "#F3E03A",
 		secondary: "#1C1C1C",
 		white: "#FFF"
+	},
+	mediaQueries: {
+		medium: "736px",
+		large: "812px"
 	}
 };
 const fontFaces = css`
@@ -81,6 +85,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	body {
+		padding-top: 5px;
 		line-height: 1.5;
 		font-family: "Hurme Geometric", sans-serif;
 	}
