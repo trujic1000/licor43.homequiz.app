@@ -1,10 +1,25 @@
+import React from "react";
+import Link from "next/link";
 import styled, { css } from "styled-components";
+
+const MyLink = ({ href, onClick, children, ...props }) => {
+	return (
+		<Link href={href} passHref>
+			<StyledLink onClick={onClick} {...props}>
+				{children}
+			</StyledLink>
+		</Link>
+	);
+};
+
+export default MyLink;
 
 export const StyledLink = styled.a`
 	display: inline-block;
 	max-width: 240px;
 	width: 100%;
-	margin: 0 auto;
+	margin: 0 auto 10px auto;
+	background-color: ${props => props.theme.colors.primary};
 	color: ${props => props.theme.colors.secondary};
 	padding: 10px 35px;
 	text-align: center;
@@ -21,6 +36,7 @@ export const StyledLink = styled.a`
 	&:focus {
 		outline: none;
 	}
+
 	${props =>
 		props.color === "white" &&
 		css`

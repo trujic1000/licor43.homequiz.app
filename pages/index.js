@@ -229,7 +229,7 @@ const Index = () => (
 );
 
 Index.getInitialProps = async () => ({
-	namespacesRequired: ["common", "menu"]
+	namespacesRequired: ["menu"]
 });
 
 export default withTranslation("menu")(Index);

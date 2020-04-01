@@ -1,10 +1,9 @@
 import React from "react";
-import Link from "next/link";
 import styled from "styled-components";
 import Layout from "~/components/layout";
-import Button from "~/components/button";
+import Link from "~/components/link";
 import Icon from "~/components/icon";
-import { withTranslation } from "~/i18n";
+import { useTranslation, i18n } from "~/i18n";
 import wcOverlay from "~/assets/img/wc-overlay.png";
 import wc1 from "~/assets/img/wc-1.png";
 import wc2 from "~/assets/img/wc-2.png";
@@ -111,39 +110,43 @@ const ButtonWrap = styled.div`
 	}
 `;
 
-const Auth = () => (
-	<Layout title="Auth" headerType="welcome">
-		<WelcomeLayout>
-			<div className="item item--1">
-				<span className="welcome">Welcome</span>
-				<Text>
-					The most creative game <span className="ever">ever</span>
-				</Text>
-			</div>
-			<div className="item item--2" />
-			<div className="item item--3" />
-			<div className="item item--4" />
-		</WelcomeLayout>
-		<ButtonWrap>
-			<Link href="/" passHref>
-				<Button onClick={() => console.log("Sign Up")}>Sign Up</Button>
-			</Link>
-			<Link href="/" passHref>
-				<Button type="facebook" onClick={() => console.log("Facebook")}>
-					<Icon name="facebook" /> Continue with Facebook
-				</Button>
-			</Link>
-			<Link href="/" passHref>
-				<Button type="invert" onClick={() => console.log("Sign In")}>
-					Sign In
-				</Button>
-			</Link>
-		</ButtonWrap>
-	</Layout>
-);
+const Auth = () => {
+	const { t } = useTranslation(["auth", "common"], { i18n });
+	return (
+		<Layout title="Auth" headerType="welcome">
+			<WelcomeLayout>
+				<div className="item item--1">
+					<span className="welcome">{t("common:welcome")}</span>
+					<Text>
+						{t("the-most-creative-game")}
+						<span className="ever"> {t("ever")}</span>
+					</Text>
+				</div>
+				<div className="item item--2" />
+				<div className="item item--3" />
+				<div className="item item--4" />
+			</WelcomeLayout>
+			<ButtonWrap>
+				<Link href="/auth" onClick={() => console.log("Sign Up")}>
+					{t("common:sign-up")}
+				</Link>
+				<Link
+					href="/auth"
+					type="facebook"
+					onClick={() => console.log("Facebook")}
+				>
+					<Icon name="facebook" /> {t("continue-with-facebook")}
+				</Link>
+				<Link href="/auth" type="invert" onClick={() => console.log("Sign In")}>
+					{t("common:sign-in")}
+				</Link>
+			</ButtonWrap>
+		</Layout>
+	);
+};
 
 Auth.getInitialProps = async () => ({
-	namespacesRequired: ["common", "menu"]
+	namespacesRequired: ["auth", "common"]
 });
 
-export default withTranslation("menu")(Auth);
+export default Auth;
