@@ -1,12 +1,133 @@
 import React from "react";
 import Link from "next/link";
-import { StyledLink } from "~/components/link";
+import { Formik, Field, Form } from "formik";
+import * as Yup from "yup";
 import Div100vh from "react-div-100vh";
 import styled, { css } from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
 import Layout from "~/components/layout";
 import { H2 } from "~/components/typography";
+import { StyledLink } from "~/components/link";
+import Checkbox from "~/components/checkbox";
+import Icon from "~/components/icon";
 import bg from "~/assets/img/sign-up-bg.jpg";
+
+const SignUp = () => {
+	const { t } = useTranslation(["sign-up", "common"], { i18n });
+	return (
+		<Layout title="Sign Up" headerType="auth">
+			<Wrapper style={{ height: "calc(100rvh - 60px)" }}>
+				<H2>
+					{t("common:welcome")} <span>{t("common:sign-up")}</span>
+				</H2>
+				<Formik
+					initialValues={{
+						name: "",
+						email: "",
+						password: "",
+						confirmPassword: "",
+						terms: false,
+						newsletter: false
+					}}
+					validationSchema={Yup.object({
+						name: Yup.string().required("Name is Required"),
+						email: Yup.string()
+							.email("Invalid email address")
+							.required("Email is Required"),
+						password: Yup.string()
+							.min(6, "Password must be at least 6 characters")
+							.required("Password is Required"),
+						confirmPassword: Yup.string().oneOf(
+							[Yup.ref("password"), null],
+							"Passwords must match"
+						),
+						terms: Yup.boolean().oneOf(
+							[true],
+							"You Must Accept Terms & Conditions"
+						)
+					})}
+					onSubmit={(values, { setSubmitting }) => {
+						setTimeout(() => {
+							alert(JSON.stringify(values, null, 2));
+							setSubmitting(false);
+						}, 5000);
+					}}
+					validateOnChange={false}
+					validateOnBlur={false}
+				>
+					{({ errors, touched, isSubmitting }) => (
+						<StyledForm>
+							<TextField
+								name="name"
+								className={errors.name ? "invalid" : null}
+								placeholder={t("your-name") + "*"}
+								autoComplete="new-password"
+							/>
+							<span className="error">
+								{errors.name && touched.name ? (
+									<span>{"*" + errors.name}</span>
+								) : null}
+							</span>
+							<TextField
+								name="email"
+								className={errors.email ? "invalid" : null}
+								placeholder={t("your-email") + "*"}
+								autoComplete="new-password"
+							/>
+							<span className="error">
+								{errors.email && touched.email ? (
+									<span>{"*" + errors.email}</span>
+								) : null}
+							</span>
+							<TextField
+								name="password"
+								className={errors.password ? "invalid" : null}
+								type="password"
+								placeholder={t("set-password") + "*"}
+								autoComplete="new-password"
+							/>
+							<span className="error">
+								{errors.password && touched.password ? (
+									<span>{"*" + errors.password}</span>
+								) : null}
+							</span>
+							<TextField
+								name="confirmPassword"
+								className={errors.confirmPassword ? "invalid" : null}
+								type="password"
+								placeholder={t("confirm-password") + "*"}
+								autoComplete="new-password"
+							/>
+							<span className="error">
+								{errors.confirmPassword && touched.confirmPassword ? (
+									<span>{"*" + errors.confirmPassword}</span>
+								) : null}
+							</span>
+							<Checkbox name="terms">
+								{t("terms")}{" "}
+								<Link href="/terms-and-conditions">
+									<a className="color-white">{t("tac")}</a>
+								</Link>
+							</Checkbox>
+							<Checkbox name="newsletter" style={{ top: -3 }}>
+								{t("newsletter")} <strong>Licor 43</strong>
+							</Checkbox>
+							<div className="btn-wrap">
+								<StyledLink as="button" type="submit" disabled={isSubmitting}>
+									{isSubmitting ? (
+										<Icon name="spinner" size={14} />
+									) : (
+										<span>{t("common:sign-up")}</span>
+									)}
+								</StyledLink>
+							</div>
+						</StyledForm>
+					)}
+				</Formik>
+			</Wrapper>
+		</Layout>
+	);
+};
 
 const Wrapper = styled(Div100vh)`
 	display: flex;
@@ -30,22 +151,31 @@ const Wrapper = styled(Div100vh)`
 	}
 `;
 
-const Form = styled.form`
+const StyledForm = styled(Form)`
 	@media screen and (min-height: ${props => props.theme.mediaQueries.medium}) {
 		margin-bottom: 30px;
 	}
 	@media screen and (min-height: ${props => props.theme.mediaQueries.large}) {
 		margin-bottom: 60px;
 	}
+
+	span.error {
+		display: block;
+		font-size: 12px;
+		text-indent: 5px;
+		height: 20px;
+		margin-bottom: 2px;
+		border-radius: 8px;
+		color: ${props => props.theme.colors.error};
+	}
 `;
 
-const TextField = styled.input.attrs(props => ({
+const TextField = styled(Field).attrs(props => ({
 	type: props.type || "text"
 }))`
 	display: block;
 	width: 100%;
 	min-height: 45px;
-	margin-bottom: 15px;
 	padding: 8px 15px;
 	background-color: transparent;
 	border: 2px solid ${props => props.theme.colors.primary};
@@ -54,8 +184,8 @@ const TextField = styled.input.attrs(props => ({
 	font-size: 18px;
 	transition: all 300ms ease;
 	color: ${props => props.theme.colors.white};
-	&:last-of-type {
-		margin-bottom: 20px;
+	&.invalid {
+		border-color: ${props => props.theme.colors.error};
 	}
 	&:focus {
 		outline: none;
@@ -78,98 +208,6 @@ const TextField = styled.input.attrs(props => ({
 			}
 		`}
 `;
-
-const CheckboxWrap = styled.label`
-	display: block;
-	position: relative;
-	padding-left: 35px;
-	margin-bottom: 15px;
-	color: ${props => props.theme.colors.primary};
-	cursor: pointer;
-	font-size: 14px;
-	-webkit-tap-highlight-color: transparent;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	&:last-of-type {
-		font-size: 11px;
-	}
-	input[type="checkbox"] {
-		position: absolute;
-		opacity: 0;
-		cursor: pointer;
-		height: 0;
-		width: 0;
-	}
-	span.checkbox {
-		position: absolute;
-		top: 3px;
-		left: 0;
-		height: 25px;
-		width: 25px;
-		background-color: transparent;
-		border: 1px solid ${props => props.theme.colors.primary};
-		border-radius: 4px;
-	}
-	a {
-		color: ${props => props.theme.colors.white};
-		text-decoration: underline;
-	}
-`;
-
-const SignUp = () => {
-	const { t } = useTranslation(["sign-up", "common"], { i18n });
-
-	const onSubmit = e => {
-		e.preventDefault();
-		console.log("Sign Up");
-	};
-	return (
-		<Layout title="Sign Up" headerType="auth">
-			<Wrapper style={{ height: "calc(100rvh - 60px)" }}>
-				<H2>
-					{t("common:welcome")} <span>{t("common:sign-up")}</span>
-				</H2>
-				<Form onSubmit={onSubmit}>
-					<TextField placeholder={t("your-name")} autoComplete="new-password" />
-					<TextField
-						placeholder={t("your-email")}
-						autoComplete="new-password"
-					/>
-					<TextField
-						type="password"
-						placeholder={t("set-password")}
-						autoComplete="new-password"
-					/>
-					<TextField
-						type="password"
-						placeholder={t("confirm-password")}
-						autoComplete="new-password"
-					/>
-					<CheckboxWrap>
-						<input type="checkbox" />
-						<span className="checkbox" />
-						{t("consent")}{" "}
-						<Link href="/terms-and-conditions">
-							<a className="color-white">{t("tac")}</a>
-						</Link>
-					</CheckboxWrap>
-					<CheckboxWrap>
-						<input type="checkbox" />
-						<span className="checkbox" style={{ top: -3 }} />
-						{t("newsletter")} <b>Licor 43</b>
-					</CheckboxWrap>
-					<div className="btn-wrap">
-						<StyledLink as="button">{t("common:sign-up")}</StyledLink>
-					</div>
-				</Form>
-			</Wrapper>
-		</Layout>
-	);
-};
 
 SignUp.getInitialProps = async () => ({
 	namespacesRequired: ["sign-up", "common"]

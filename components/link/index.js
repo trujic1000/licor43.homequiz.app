@@ -29,7 +29,7 @@ export const StyledLink = styled.a`
 	border: 3px solid transparent;
 	border-radius: 40px;
 	transition: 0.3s ease;
-	&:hover {
+	&:hover, &:disabled {
 		background-color: #000;
 		color: ${props => props.theme.colors.primary};
 	}

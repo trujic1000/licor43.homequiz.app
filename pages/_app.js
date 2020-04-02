@@ -14,7 +14,8 @@ const theme = {
 	colors: {
 		primary: "#F3E03A",
 		secondary: "#1C1C1C",
-		white: "#FFF"
+		white: "#FFF",
+		error: "#ff424c"
 	},
 	mediaQueries: {
 		medium: "736px",
