@@ -11,6 +11,7 @@ const Wrapper = styled.header`
 	background-color: #000;
 	background: url(${HeaderBgSmall});
 	background-size: cover;
+	background-repeat: no-repeat;
 	height: 55px;
 	margin-bottom: 80px;
 	display: flex;

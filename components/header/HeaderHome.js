@@ -10,6 +10,7 @@ const Wrapper = styled.header`
 	background-color: ${props => props.theme.colors.secondary};
 	background: url(${Header});
 	background-size: cover;
+	background-repeat: no-repeat;
 	height: 110px;
 	z-index: 5;
 

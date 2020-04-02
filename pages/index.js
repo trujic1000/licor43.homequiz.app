@@ -12,10 +12,79 @@ import wc4 from "~/assets/img/wc-4.png";
 import flagSpain from "~/assets/img/flag-spain.png";
 import flagUk from "~/assets/img/flag-uk.png";
 
+const Index = () => (
+	<Layout title="Home" headerType="home">
+		<WelcomeLayout>
+			<TextWrap>
+				<span className="text-large color-primary">
+					Play with your friends Remotely.
+				</span>
+				<span className="text-large color-white mb-10">
+					Juega con tus amigos Remotamente.{" "}
+				</span>
+				<span className="text-medium color-primary">
+					Sign In. Share your code with friends.
+					<span className="text-small">
+						(Everyone can join. No need to download)
+					</span>
+				</span>
+				<span className="text-medium color-primary">Choose your category.</span>
+				<span className="text-medium color-primary">
+					Try your most creative answer.
+					<span className="text-small">(No right or wrong answers)</span>
+				</span>
+				<span className="text-medium color-primary">
+					Get the votes to become the winner.
+				</span>
+				<span
+					className="text-medium color-white mt-10"
+					style={{ padding: "5px 10px" }}
+				>
+					Regístrate. Comparte tu código con amigos.
+					<span className="text-small">
+						(Todos pueden unirse. No necesita descarga)
+					</span>
+				</span>
+				<span className="text-medium color-white">Elige una categoría.</span>
+				<span className="text-medium color-white">
+					Intenta tu respuesta más creativa.
+					<span className="text-small">
+						(No hay respuestas correctas o incorrectas)
+					</span>
+				</span>
+				<span className="text-medium color-white">
+					Consigue los votos y sé el ganador.
+				</span>
+			</TextWrap>
+		</WelcomeLayout>
+		<Footer>
+			<span>Choose your langauge to continue</span>
+			<div className="button-wrap">
+				<Link href="/auth">
+					<a onClick={() => console.log("clicked on spain")}>
+						<img src={flagSpain} alt="flag-spain" />
+					</a>
+				</Link>
+				<Link href="/auth">
+					<a onClick={() => console.log("clicked on uk")}>
+						<img src={flagUk} alt="flag-uk" />
+					</a>
+				</Link>
+			</div>
+		</Footer>
+	</Layout>
+);
+
+Index.getInitialProps = async () => ({
+	namespacesRequired: ["menu"]
+});
+
+export default withTranslation("menu")(Index);
+
 const WelcomeLayout = styled.div`
 	position: relative;
 	display: grid;
-	height: 60vh;
+	height: 385px;
 	margin-top: 10px;
 	background-image: url(${wcBg});
 	&::before {
@@ -164,72 +233,3 @@ const Footer = styled.div`
 		}
 	}
 `;
-
-const Index = () => (
-	<Layout title="Home" headerType="home">
-		<WelcomeLayout>
-			<TextWrap>
-				<span className="text-large color-primary">
-					Play with your friends Remotely.
-				</span>
-				<span className="text-large color-white mb-10">
-					Juega con tus amigos Remotamente.{" "}
-				</span>
-				<span className="text-medium color-primary">
-					Sign In. Share your code with friends.
-					<span className="text-small">
-						(Everyone can join. No need to download)
-					</span>
-				</span>
-				<span className="text-medium color-primary">Choose your category.</span>
-				<span className="text-medium color-primary">
-					Try your most creative answer.
-					<span className="text-small">(No right or wrong answers)</span>
-				</span>
-				<span className="text-medium color-primary">
-					Get the votes to become the winner.
-				</span>
-				<span
-					className="text-medium color-white mt-10"
-					style={{ padding: "5px 10px" }}
-				>
-					Regístrate. Comparte tu código con amigos.
-					<span className="text-small">
-						(Todos pueden unirse. No necesita descarga)
-					</span>
-				</span>
-				<span className="text-medium color-white">Elige una categoría.</span>
-				<span className="text-medium color-white">
-					Intenta tu respuesta más creativa.
-					<span className="text-small">
-						(No hay respuestas correctas o incorrectas)
-					</span>
-				</span>
-				<span className="text-medium color-white">
-					Consigue los votos y sé el ganador.
-				</span>
-			</TextWrap>
-		</WelcomeLayout>
-		<Footer>
-			<span>Choose your langauge to continue</span>
-			<div className="button-wrap">
-				<Link href="/auth">
-					<a onClick={() => console.log("clicked on spain")}>
-						<img src={flagSpain} alt="flag-spain" />
-					</a>
-				</Link>
-				<Link href="/auth">
-					<a onClick={() => console.log("clicked on uk")}>
-						<img src={flagUk} alt="flag-uk" />
-					</a>
-				</Link>
-			</div>
-		</Footer>
-	</Layout>
-);
-
-Index.getInitialProps = async () => ({
-	namespacesRequired: ["menu"]
-});
-
-export default withTranslation("menu")(Index);

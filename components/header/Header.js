@@ -13,6 +13,7 @@ const Wrapper = styled.header`
 	background-image: ${props =>
 		props.size === "big" ? `url(${HeaderBgBig})` : `url(${HeaderBgSmall})`};
 	background-size: cover;
+	background-repeat: no-repeat;
 	background-blend-mode: lighten;
 	height: 55px;
 	margin-bottom: 5px;

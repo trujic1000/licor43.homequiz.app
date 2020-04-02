@@ -2,9 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import Div100vh from "react-div-100vh";
+import { isMobileSafari } from "react-device-detect";
 import styled, { css } from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
+import Wrap from "~/components/wrapper";
 import Layout from "~/components/layout";
 import { H2 } from "~/components/typography";
 import { StyledLink } from "~/components/link";
@@ -16,7 +17,10 @@ const SignUp = () => {
 	const { t } = useTranslation(["sign-up", "common"], { i18n });
 	return (
 		<Layout title="Sign Up" headerType="auth">
-			<Wrapper style={{ height: "calc(100rvh - 60px)" }}>
+			<Wrapper
+				ismobilesafari={isMobileSafari}
+				style={{ height: "calc(100rvh - 60px )" }}
+			>
 				<H2>
 					{t("common:welcome")} <span>{t("common:sign-up")}</span>
 				</H2>
@@ -115,7 +119,7 @@ const SignUp = () => {
 							<div className="btn-wrap">
 								<StyledLink as="button" type="submit" disabled={isSubmitting}>
 									{isSubmitting ? (
-										<Icon name="spinner" size={14} />
+										<Icon name="spinner" size="14" />
 									) : (
 										<span>{t("common:sign-up")}</span>
 									)}
@@ -129,16 +133,38 @@ const SignUp = () => {
 	);
 };
 
-const Wrapper = styled(Div100vh)`
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+const Wrapper = styled(Wrap)`
 	padding: 0 30px;
 	background-color: rgba(0, 0, 0, 0.8);
 	background-image: url(${bg});
-	background-blend-mode: overlay;
+	background-repeat: no-repeat;
 	background-position: bottom 1px right 0;
+	background-blend-mode: overlay;
 	background-size: cover;
+
+	@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (-webkit-min-device-pixel-ratio: 2) {
+		height: 560px !important;
+	}
+
+	${props =>
+		props.ismobilesafari === true &&
+		css`
+			@media only screen and (min-device-width: 375px) and (max-device-height: 668px) and (-webkit-min-device-pixel-ratio: 2) {
+				height: 560px !important;
+			}
+
+			@media only screen and (min-device-width: 375px) and (max-device-height: 812px) and (-webkit-min-device-pixel-ratio: 3) {
+				height: 575px !important;
+			}
+
+			@media only screen and (min-device-width: 414px) and (max-device-height: 896px) and (-webkit-min-device-pixel-ratio: 2) {
+				height: 659px !important;
+			}
+
+			@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (-webkit-min-device-pixel-ratio: 3) {
+				height: 575px !important;
+			}
+		`}
 
 	.btn-wrap {
 		display: flex;
@@ -152,10 +178,12 @@ const Wrapper = styled(Div100vh)`
 `;
 
 const StyledForm = styled(Form)`
-	@media screen and (min-height: ${props => props.theme.mediaQueries.medium}) {
+	@media screen and (min-device-height: ${props =>
+			props.theme.mediaQueries.medium}) {
 		margin-bottom: 30px;
 	}
-	@media screen and (min-height: ${props => props.theme.mediaQueries.large}) {
+	@media screen and (min-device-height: ${props =>
+			props.theme.mediaQueries.large}) {
 		margin-bottom: 60px;
 	}
 

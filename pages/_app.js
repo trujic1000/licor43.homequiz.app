@@ -18,6 +18,7 @@ const theme = {
 		error: "#ff424c"
 	},
 	mediaQueries: {
+		small: "666px",
 		medium: "736px",
 		large: "812px"
 	}

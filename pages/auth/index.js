@@ -10,13 +10,54 @@ import wc2 from "~/assets/img/wc-2.png";
 import wc3 from "~/assets/img/wc-3.png";
 import wc4 from "~/assets/img/wc-4.png";
 
+const Auth = () => {
+	const { t } = useTranslation(["auth", "common"], { i18n });
+	return (
+		<Layout title="Auth" headerType="welcome">
+			<WelcomeLayout>
+				<div className="item item--1">
+					<span className="welcome">{t("common:welcome")}</span>
+					<Text>
+						{t("the-most-creative-game")}
+						<span className="ever"> {t("ever")}</span>
+					</Text>
+				</div>
+				<div className="item item--2" />
+				<div className="item item--3" />
+				<div className="item item--4" />
+			</WelcomeLayout>
+			<ButtonWrap>
+				<Link href="/auth/sign-up" onClick={() => console.log("Sign Up")}>
+					{t("common:sign-up")}
+				</Link>
+				<Link
+					href="/auth"
+					type="facebook"
+					onClick={() => console.log("Facebook")}
+				>
+					<Icon name="facebook" /> {t("continue-with-facebook")}
+				</Link>
+				<Link href="/auth" type="invert" onClick={() => console.log("Sign In")}>
+					{t("common:sign-in")}
+				</Link>
+			</ButtonWrap>
+		</Layout>
+	);
+};
+
+Auth.getInitialProps = async () => ({
+	namespacesRequired: ["auth", "common"]
+});
+
+export default Auth;
+
 const WelcomeLayout = styled.div`
 	position: relative;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-rows: repeat(7, 1fr);
 	grid-gap: 6px;
-	height: 60vh;
+	height: 385px;
 	padding-top: 10px;
 	&::before {
 		content: "";
@@ -97,56 +138,10 @@ const ButtonWrap = styled.div`
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	position: absolute;
-	bottom: 8%;
+	margin-top: -60px;
 	z-index: 5;
 
-	@media (min-height: ${props => props.theme.mediaQueries.medium}) {
-		bottom: 10%;
-	}
-
-	@media (min-height: ${props => props.theme.mediaQueries.large}) {
-		bottom: 13%;
+	a {
+		z-index: 5;
 	}
 `;
-
-const Auth = () => {
-	const { t } = useTranslation(["auth", "common"], { i18n });
-	return (
-		<Layout title="Auth" headerType="welcome">
-			<WelcomeLayout>
-				<div className="item item--1">
-					<span className="welcome">{t("common:welcome")}</span>
-					<Text>
-						{t("the-most-creative-game")}
-						<span className="ever"> {t("ever")}</span>
-					</Text>
-				</div>
-				<div className="item item--2" />
-				<div className="item item--3" />
-				<div className="item item--4" />
-			</WelcomeLayout>
-			<ButtonWrap>
-				<Link href="/auth/sign-up" onClick={() => console.log("Sign Up")}>
-					{t("common:sign-up")}
-				</Link>
-				<Link
-					href="/auth"
-					type="facebook"
-					onClick={() => console.log("Facebook")}
-				>
-					<Icon name="facebook" /> {t("continue-with-facebook")}
-				</Link>
-				<Link href="/auth" type="invert" onClick={() => console.log("Sign In")}>
-					{t("common:sign-in")}
-				</Link>
-			</ButtonWrap>
-		</Layout>
-	);
-};
-
-Auth.getInitialProps = async () => ({
-	namespacesRequired: ["auth", "common"]
-});
-
-export default Auth;
