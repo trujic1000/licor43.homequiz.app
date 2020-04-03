@@ -32,12 +32,16 @@ const Auth = () => {
 				</Link>
 				<Link
 					href="/auth"
-					type="facebook"
+					variant="facebook"
 					onClick={() => console.log("Facebook")}
 				>
 					<Icon name="facebook" /> {t("continue-with-facebook")}
 				</Link>
-				<Link href="/auth" type="invert" onClick={() => console.log("Sign In")}>
+				<Link
+					href="/auth/sign-in"
+					variant="invert"
+					onClick={() => console.log("Sign In")}
+				>
 					{t("common:sign-in")}
 				</Link>
 			</ButtonWrap>

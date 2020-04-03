@@ -1,24 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Formik, Field, Form } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { isMobileSafari } from "react-device-detect";
 import styled, { css } from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
-import Wrap from "~/components/wrapper";
+import { Wrap, TextField, Checkbox } from "~/components/elements";
 import Layout from "~/components/layout";
 import { H2 } from "~/components/typography";
 import { StyledLink } from "~/components/link";
-import Checkbox from "~/components/checkbox";
 import Icon from "~/components/icon";
 import bg from "~/assets/img/sign-up-bg.jpg";
 
 const SignUp = () => {
 	const { t } = useTranslation(["sign-up", "common"], { i18n });
+	const [isSafari, setIsSafari] = useState("no");
+	useEffect(() => {
+		if (isMobileSafari) {
+			setIsSafari("yes");
+		}
+	}, [isMobileSafari]);
 	return (
 		<Layout title="Sign Up" headerType="auth">
 			<Wrapper
-				ismobilesafari={isMobileSafari}
+				ismobilesafari={isSafari}
 				style={{ height: "calc(100rvh - 60px )" }}
 			>
 				<H2>
@@ -60,7 +65,7 @@ const SignUp = () => {
 					validateOnBlur={false}
 				>
 					{({ errors, touched, isSubmitting }) => (
-						<StyledForm>
+						<Form>
 							<TextField
 								name="name"
 								className={errors.name ? "invalid" : null}
@@ -125,7 +130,7 @@ const SignUp = () => {
 									)}
 								</StyledLink>
 							</div>
-						</StyledForm>
+						</Form>
 					)}
 				</Formik>
 			</Wrapper>
@@ -133,7 +138,7 @@ const SignUp = () => {
 	);
 };
 
-const Wrapper = styled(Wrap)`
+export const Wrapper = styled(Wrap)`
 	padding: 0 30px;
 	background-color: rgba(0, 0, 0, 0.8);
 	background-image: url(${bg});
@@ -147,7 +152,7 @@ const Wrapper = styled(Wrap)`
 	}
 
 	${props =>
-		props.ismobilesafari === true &&
+		props.ismobilesafari === "yes" &&
 		css`
 			@media only screen and (min-device-width: 375px) and (max-device-height: 668px) and (-webkit-min-device-pixel-ratio: 2) {
 				height: 560px !important;
@@ -166,6 +171,15 @@ const Wrapper = styled(Wrap)`
 			}
 		`}
 
+	span.error {
+		display: block;
+		font-size: 12px;
+		text-indent: 5px;
+		height: 20px;
+		margin-bottom: 2px;
+		color: ${props => props.theme.colors.error};
+	}
+
 	.btn-wrap {
 		display: flex;
 		justify-content: center;
@@ -175,66 +189,6 @@ const Wrapper = styled(Wrap)`
 			margin-top: 10px;
 		}
 	}
-`;
-
-const StyledForm = styled(Form)`
-	@media screen and (min-device-height: ${props =>
-			props.theme.mediaQueries.medium}) {
-		margin-bottom: 30px;
-	}
-	@media screen and (min-device-height: ${props =>
-			props.theme.mediaQueries.large}) {
-		margin-bottom: 60px;
-	}
-
-	span.error {
-		display: block;
-		font-size: 12px;
-		text-indent: 5px;
-		height: 20px;
-		margin-bottom: 2px;
-		border-radius: 8px;
-		color: ${props => props.theme.colors.error};
-	}
-`;
-
-const TextField = styled(Field).attrs(props => ({
-	type: props.type || "text"
-}))`
-	display: block;
-	width: 100%;
-	min-height: 45px;
-	padding: 8px 15px;
-	background-color: transparent;
-	border: 2px solid ${props => props.theme.colors.primary};
-	border-radius: 8px;
-	text-align: center;
-	font-size: 18px;
-	transition: all 300ms ease;
-	color: ${props => props.theme.colors.white};
-	&.invalid {
-		border-color: ${props => props.theme.colors.error};
-	}
-	&:focus {
-		outline: none;
-		border: 2px solid ${props => props.theme.colors.white};
-		&::placeholder {
-			color: ${props => props.theme.colors.white};
-		}
-	}
-	&::placeholder {
-		color: #777777;
-		transition: all 300ms ease-in;
-	}
-	${props =>
-		props.type === "password" &&
-		css`
-			letter-spacing: 5px;
-			&::placeholder {
-				letter-spacing: 0;
-				color: #777777;
-			}
-		`}
 `;
 
 SignUp.getInitialProps = async () => ({

@@ -1,8 +1,55 @@
 import React from "react";
-import styled from "styled-components";
-import { useField } from "formik";
+import styled, { css } from "styled-components";
+import Div100vh from "react-div-100vh";
+import { useField, Field } from "formik";
 
-const Checkbox = ({ style, children, ...props }) => {
+export const Wrap = styled(Div100vh)`
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+`;
+
+export const TextField = styled(Field).attrs(props => ({
+	type: props.type || "text"
+}))`
+	display: block;
+	width: 100%;
+	min-height: 45px;
+	padding: 8px 15px;
+	background-color: transparent;
+	border: 2px solid ${props => props.theme.colors.primary};
+	border-radius: 8px;
+	text-align: center;
+	font-size: 18px;
+	transition: all 300ms ease;
+	color: ${props => props.theme.colors.white};
+	&.invalid {
+		border-color: ${props => props.theme.colors.error};
+	}
+	&:focus {
+		outline: none;
+		border: 2px solid ${props => props.theme.colors.white};
+		&::placeholder {
+			color: ${props => props.theme.colors.white};
+		}
+	}
+	&::placeholder {
+		color: #777777;
+		transition: all 300ms ease-in;
+	}
+	${props =>
+		props.type === "password" &&
+		css`
+			letter-spacing: 5px;
+			&::placeholder {
+				letter-spacing: 0;
+				color: #777777;
+			}
+		`}
+`;
+
+export const Checkbox = ({ style, children, ...props }) => {
 	const [field, meta] = useField({ ...props, type: "checkbox" });
 	return (
 		<>
@@ -81,5 +128,3 @@ const CheckboxWrap = styled.label`
 		font-weight: bold;
 	}
 `;
-
-export default Checkbox;

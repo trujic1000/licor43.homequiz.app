@@ -64,7 +64,7 @@ export const StyledLink = styled.a`
 		`}
 
   ${props =>
-		props.type === "invert" &&
+		props.variant === "invert" &&
 		css`
 			background-color: ${props => props.theme.colors.secondary};
 			color: ${props => props.theme.colors.primary};
@@ -73,10 +73,14 @@ export const StyledLink = styled.a`
 				background-color: ${props => props.theme.colors.primary};
 				color: ${props => props.theme.colors.secondary};
 			}
+			&:disabled {
+				background-color: ${props => props.theme.colors.secondary};
+				color: ${props => props.theme.colors.primary};
+			}
 		`}
 
   ${props =>
-		props.type === "facebook" &&
+		props.variant === "facebook" &&
 		css`
 			display: flex;
 			align-items: center;
