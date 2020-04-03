@@ -5,5 +5,12 @@
 	"confirm-password": "Confirmar contraseña",
 	"terms": "Confirmo que tengo más de 18 años y acepto el",
 	"tac": "Términos & Condiciones",
-	"newsletter": "Me gustaría recibir información acerca de"
+	"newsletter": "Me gustaría recibir información acerca de",
+	"name-is-required": "Se requiere el nombre",
+	"invalid-email-address": "Dirección de correo electrónico no válida",
+	"email-is-required": "Correo electronico es requerido",
+	"password-must-be-6-characters": "La contraseña debe tener al menos 6 caracteres",
+	"password-is-required": "Se requiere contraseña",
+	"passwords-must-match": "Las contraseñas deben coincidir",
+	"you-must-accept-tac": "Debe aceptar los términos y condiciones"
 }

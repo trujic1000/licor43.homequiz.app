@@ -4,10 +4,9 @@ import * as Yup from "yup";
 import { isMobileSafari } from "react-device-detect";
 import styled, { css } from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
-import { TextField } from "~/components/elements";
+import { TextField, ErrorMessage, Heading } from "~/components/elements";
 import { Wrapper } from "./sign-up";
 import Layout from "~/components/layout";
-import { H2 } from "~/components/typography";
 import { StyledLink } from "~/components/link";
 import Icon from "~/components/icon";
 
@@ -25,27 +24,26 @@ const SignIn = () => {
 				ismobilesafari={isSafari}
 				style={{ height: "calc(100rvh - 60px )" }}
 			>
-				<H2>
-					{t("common:welcome")} <span>{t("common:sign-in")}</span>
-				</H2>
+				<Heading>
+					{t("common:welcome")}{" "}
+					<span className="text-capitalize">{t("common:sign-in")}</span>
+				</Heading>
 				<Formik
 					initialValues={{
 						email: "",
-						password: ""
+						password: "",
 					}}
 					validationSchema={Yup.object({
 						email: Yup.string()
-							.email("Invalid email address")
-							.required("Email is Required"),
-						password: Yup.string()
-							.min(6, "Password must be at least 6 characters")
-							.required("Password is Required")
+							.email(t("invalid-email-address"))
+							.required(t("email-is-required")),
+						password: Yup.string().required(t("password-is-required")),
 					})}
 					onSubmit={(values, { setSubmitting }) => {
 						setTimeout(() => {
 							alert(JSON.stringify(values, null, 2));
 							setSubmitting(false);
-						}, 5000);
+						}, 1000);
 					}}
 					validateOnChange={false}
 					validateOnBlur={false}
@@ -59,11 +57,11 @@ const SignIn = () => {
 									placeholder={t("your-email") + "*"}
 									autoComplete="new-password"
 								/>
-								<span className="error">
+								<ErrorMessage>
 									{errors.email && touched.email ? (
 										<span>{"*" + errors.email}</span>
 									) : null}
-								</span>
+								</ErrorMessage>
 								<StyledTextField
 									name="password"
 									className={errors.password ? "invalid" : null}
@@ -71,11 +69,11 @@ const SignIn = () => {
 									placeholder={t("your-password") + "*"}
 									autoComplete="new-password"
 								/>
-								<span className="error">
+								<ErrorMessage>
 									{errors.password && touched.password ? (
 										<span>{"*" + errors.password}</span>
 									) : null}
-								</span>
+								</ErrorMessage>
 							</div>
 							<div className="btn-wrap">
 								<StyledLink
@@ -100,7 +98,7 @@ const SignIn = () => {
 };
 
 const StyledWrapper = styled(Wrapper)`
-	${props =>
+	${(props) =>
 		props.ismobilesafari === "yes" &&
 		css`
 			@media only screen and (min-device-width: 375px) and (max-device-height: 668px) and (-webkit-min-device-pixel-ratio: 2) {
@@ -131,18 +129,18 @@ const StyledForm = styled(Form)`
 
 const StyledTextField = styled(TextField)`
 	border: none;
-	border-bottom: 2px solid ${props => props.theme.colors.primary};
+	border-bottom: 2px solid ${(props) => props.theme.colors.primary};
 	border-radius: 0;
 	outline: none;
 	&:focus {
 		outline: none;
 		border: none;
-		border-bottom: 2px solid ${props => props.theme.colors.white};
+		border-bottom: 2px solid ${(props) => props.theme.colors.white};
 	}
 `;
 
 SignIn.getInitialProps = async () => ({
-	namespacesRequired: ["sign-in", "common"]
+	namespacesRequired: ["sign-in", "common"],
 });
 
 export default SignIn;

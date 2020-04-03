@@ -5,7 +5,7 @@ const instance = new NextI18Next({
 	preload: ["en"],
 	defaultLanguage: "en",
 	otherLanguages: ["es"],
-	fallbackLng: "en"
+	fallbackLng: "en",
 });
 
 module.exports = instance;

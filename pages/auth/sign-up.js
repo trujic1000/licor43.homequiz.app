@@ -5,9 +5,14 @@ import * as Yup from "yup";
 import { isMobileSafari } from "react-device-detect";
 import styled, { css } from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
-import { Wrap, TextField, Checkbox } from "~/components/elements";
+import {
+	Wrap100vh,
+	TextField,
+	ErrorMessage,
+	Checkbox,
+	Heading,
+} from "~/components/elements";
 import Layout from "~/components/layout";
-import { H2 } from "~/components/typography";
 import { StyledLink } from "~/components/link";
 import Icon from "~/components/icon";
 import bg from "~/assets/img/sign-up-bg.jpg";
@@ -26,9 +31,10 @@ const SignUp = () => {
 				ismobilesafari={isSafari}
 				style={{ height: "calc(100rvh - 60px )" }}
 			>
-				<H2>
-					{t("common:welcome")} <span>{t("common:sign-up")}</span>
-				</H2>
+				<Heading>
+					{t("common:welcome")}{" "}
+					<span className="text-capitalize">{t("common:sign-up")}</span>
+				</Heading>
 				<Formik
 					initialValues={{
 						name: "",
@@ -36,30 +42,27 @@ const SignUp = () => {
 						password: "",
 						confirmPassword: "",
 						terms: false,
-						newsletter: false
+						newsletter: false,
 					}}
 					validationSchema={Yup.object({
-						name: Yup.string().required("Name is Required"),
+						name: Yup.string().required(t("name-is-required")),
 						email: Yup.string()
-							.email("Invalid email address")
-							.required("Email is Required"),
+							.email(t("invalid-email-address"))
+							.required(t("email-is-required")),
 						password: Yup.string()
-							.min(6, "Password must be at least 6 characters")
-							.required("Password is Required"),
+							.min(6, t("password-must-be-6-characters"))
+							.required(t("password-is-required")),
 						confirmPassword: Yup.string().oneOf(
 							[Yup.ref("password"), null],
-							"Passwords must match"
+							t("passwords-must-match")
 						),
-						terms: Yup.boolean().oneOf(
-							[true],
-							"You Must Accept Terms & Conditions"
-						)
+						terms: Yup.boolean().oneOf([true], t("you-must-accept-tac")),
 					})}
 					onSubmit={(values, { setSubmitting }) => {
 						setTimeout(() => {
 							alert(JSON.stringify(values, null, 2));
 							setSubmitting(false);
-						}, 5000);
+						}, 1000);
 					}}
 					validateOnChange={false}
 					validateOnBlur={false}
@@ -72,22 +75,22 @@ const SignUp = () => {
 								placeholder={t("your-name") + "*"}
 								autoComplete="new-password"
 							/>
-							<span className="error">
+							<ErrorMessage>
 								{errors.name && touched.name ? (
 									<span>{"*" + errors.name}</span>
 								) : null}
-							</span>
+							</ErrorMessage>
 							<TextField
 								name="email"
 								className={errors.email ? "invalid" : null}
 								placeholder={t("your-email") + "*"}
 								autoComplete="new-password"
 							/>
-							<span className="error">
+							<ErrorMessage>
 								{errors.email && touched.email ? (
 									<span>{"*" + errors.email}</span>
 								) : null}
-							</span>
+							</ErrorMessage>
 							<TextField
 								name="password"
 								className={errors.password ? "invalid" : null}
@@ -95,11 +98,11 @@ const SignUp = () => {
 								placeholder={t("set-password") + "*"}
 								autoComplete="new-password"
 							/>
-							<span className="error">
+							<ErrorMessage>
 								{errors.password && touched.password ? (
 									<span>{"*" + errors.password}</span>
 								) : null}
-							</span>
+							</ErrorMessage>
 							<TextField
 								name="confirmPassword"
 								className={errors.confirmPassword ? "invalid" : null}
@@ -107,11 +110,11 @@ const SignUp = () => {
 								placeholder={t("confirm-password") + "*"}
 								autoComplete="new-password"
 							/>
-							<span className="error">
+							<ErrorMessage>
 								{errors.confirmPassword && touched.confirmPassword ? (
 									<span>{"*" + errors.confirmPassword}</span>
 								) : null}
-							</span>
+							</ErrorMessage>
 							<Checkbox name="terms">
 								{t("terms")}{" "}
 								<Link href="/terms-and-conditions">
@@ -138,7 +141,7 @@ const SignUp = () => {
 	);
 };
 
-export const Wrapper = styled(Wrap)`
+export const Wrapper = styled(Wrap100vh)`
 	padding: 0 30px;
 	background-color: rgba(0, 0, 0, 0.8);
 	background-image: url(${bg});
@@ -151,7 +154,7 @@ export const Wrapper = styled(Wrap)`
 		height: 560px !important;
 	}
 
-	${props =>
+	${(props) =>
 		props.ismobilesafari === "yes" &&
 		css`
 			@media only screen and (min-device-width: 375px) and (max-device-height: 668px) and (-webkit-min-device-pixel-ratio: 2) {
@@ -170,16 +173,6 @@ export const Wrapper = styled(Wrap)`
 				height: 575px !important;
 			}
 		`}
-
-	span.error {
-		display: block;
-		font-size: 12px;
-		text-indent: 5px;
-		height: 20px;
-		margin-bottom: 2px;
-		color: ${props => props.theme.colors.error};
-	}
-
 	.btn-wrap {
 		display: flex;
 		justify-content: center;
@@ -192,7 +185,7 @@ export const Wrapper = styled(Wrap)`
 `;
 
 SignUp.getInitialProps = async () => ({
-	namespacesRequired: ["sign-up", "common"]
+	namespacesRequired: ["sign-up", "common"],
 });
 
 export default SignUp;

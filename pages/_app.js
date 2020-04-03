@@ -10,18 +10,48 @@ import { appWithTranslation } from "../i18n";
 
 import { initializeStore } from "../store";
 
+class MyApp extends App {
+	static async getInitialProps({ Component, ctx }) {
+		return {
+			pageProps: {
+				// Call page-level getInitialProps
+				...(Component.getInitialProps
+					? await Component.getInitialProps(ctx)
+					: {}),
+			},
+		};
+	}
+
+	render() {
+		const { Component, pageProps, store } = this.props;
+		return (
+			<ThemeProvider theme={theme}>
+				<Provider store={store}>
+					<Head>
+						<title>Todo App</title>
+					</Head>
+					<GlobalStyle />
+					<Component {...pageProps} />
+				</Provider>
+			</ThemeProvider>
+		);
+	}
+}
+
+export default withRedux(initializeStore)(appWithTranslation(MyApp));
+
 const theme = {
 	colors: {
 		primary: "#F3E03A",
 		secondary: "#1C1C1C",
 		white: "#FFF",
-		error: "#ff424c"
+		error: "#ff424c",
 	},
 	mediaQueries: {
 		small: "666px",
 		medium: "736px",
-		large: "812px"
-	}
+		large: "812px",
+	},
 };
 const fontFaces = css`
 	@font-face {
@@ -82,8 +112,8 @@ const GlobalStyle = createGlobalStyle`
 
 	html, body {
 		height: 100%;
-		background-color: ${props => props.theme.colors.secondary};
-		color: ${props => props.theme.colors.primary};
+		background-color: ${(props) => props.theme.colors.secondary};
+		color: ${(props) => props.theme.colors.primary};
 	}
 
 	body {
@@ -96,33 +126,3 @@ const GlobalStyle = createGlobalStyle`
 		text-decoration: none;
 	}
 `;
-
-class MyApp extends App {
-	static async getInitialProps({ Component, ctx }) {
-		return {
-			pageProps: {
-				// Call page-level getInitialProps
-				...(Component.getInitialProps
-					? await Component.getInitialProps(ctx)
-					: {})
-			}
-		};
-	}
-
-	render() {
-		const { Component, pageProps, store } = this.props;
-		return (
-			<ThemeProvider theme={theme}>
-				<Provider store={store}>
-					<Head>
-						<title>Todo App</title>
-					</Head>
-					<GlobalStyle />
-					<Component {...pageProps} />
-				</Provider>
-			</ThemeProvider>
-		);
-	}
-}
-
-export default withRedux(initializeStore)(appWithTranslation(MyApp));

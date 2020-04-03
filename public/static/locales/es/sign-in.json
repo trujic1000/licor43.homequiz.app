@@ -1,4 +1,7 @@
 {
 	"your-email": "Tu email",
-	"your-password": "Contraseña"
+	"your-password": "Contraseña",
+	"invalid-email-address": "Dirección de correo electrónico no válida",
+	"email-is-required": "Correo electronico es requerido",
+	"password-is-required": "Se requiere contraseña"
 }

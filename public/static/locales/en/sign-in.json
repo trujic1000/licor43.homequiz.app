@@ -1,4 +1,7 @@
 {
 	"your-email": "Your Email",
-	"your-password": "Your Password"
+	"your-password": "Your Password",
+	"invalid-email-address": "Invalid email address",
+	"email-is-required": "Email is required",
+	"password-is-required": "Password is required"
 }

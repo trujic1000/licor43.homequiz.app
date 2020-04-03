@@ -1,6 +1,7 @@
 {
-  "lets-set-up": "Let's set up",
-  "the-basics": "the basics.",
-  "new-game-name": "New Game Name",
-  "create-new-game": "Create New Game"
+	"lets-set-up": "Let's set up",
+	"the-basics": "the basics.",
+	"new-game-name": "New Game Name",
+	"create-new-game": "Create New Game",
+	"quiz-name-is-required": "Quiz name is required"
 }

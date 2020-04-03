@@ -3,42 +3,65 @@ import styled, { css } from "styled-components";
 import Div100vh from "react-div-100vh";
 import { useField, Field } from "formik";
 
-export const Wrap = styled(Div100vh)`
+export const Heading = styled.div`
+	padding: 17px 0;
+	font-weight: bold;
+	font-size: 40px;
+	color: ${(props) => props.theme.colors.primary};
+	line-height: 1;
+
+	span {
+		display: block;
+		color: ${(props) => props.theme.colors.white};
+		&.text-capitalize {
+			text-transform: capitalize;
+		}
+	}
+`;
+
+export const Wrap100vh = styled(Div100vh)`
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 `;
+export const Wrapper = styled.div`
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 0 30px;
+`;
 
-export const TextField = styled(Field).attrs(props => ({
-	type: props.type || "text"
+export const TextField = styled(Field).attrs((props) => ({
+	type: props.type || "text",
 }))`
 	display: block;
 	width: 100%;
 	min-height: 45px;
 	padding: 8px 15px;
 	background-color: transparent;
-	border: 2px solid ${props => props.theme.colors.primary};
+	border: 2px solid ${(props) => props.theme.colors.primary};
 	border-radius: 8px;
 	text-align: center;
 	font-size: 18px;
 	transition: all 300ms ease;
-	color: ${props => props.theme.colors.white};
+	color: ${(props) => props.theme.colors.white};
 	&.invalid {
-		border-color: ${props => props.theme.colors.error};
+		border-color: ${(props) => props.theme.colors.error};
 	}
 	&:focus {
 		outline: none;
-		border: 2px solid ${props => props.theme.colors.white};
+		border: 2px solid ${(props) => props.theme.colors.white};
 		&::placeholder {
-			color: ${props => props.theme.colors.white};
+			color: ${(props) => props.theme.colors.white};
 		}
 	}
 	&::placeholder {
 		color: #777777;
 		transition: all 300ms ease-in;
 	}
-	${props =>
+	${(props) =>
 		props.type === "password" &&
 		css`
 			letter-spacing: 5px;
@@ -47,6 +70,15 @@ export const TextField = styled(Field).attrs(props => ({
 				color: #777777;
 			}
 		`}
+`;
+
+export const ErrorMessage = styled.span`
+	display: block;
+	font-size: 12px;
+	text-indent: 5px;
+	height: 20px;
+	margin-bottom: 2px;
+	color: ${(props) => props.theme.colors.error};
 `;
 
 export const Checkbox = ({ style, children, ...props }) => {
@@ -58,9 +90,9 @@ export const Checkbox = ({ style, children, ...props }) => {
 				<span role="checkbox" className="checkbox" style={style} />
 				{children}
 			</CheckboxWrap>
-			<span className="error" style={{ textIndent: 35 }}>
+			<ErrorMessage style={{ textIndent: 35 }}>
 				{meta.touched && meta.error ? <span>{"*" + meta.error}</span> : null}
-			</span>
+			</ErrorMessage>
 		</>
 	);
 };
@@ -69,7 +101,7 @@ const CheckboxWrap = styled.label`
 	display: block;
 	position: relative;
 	padding-left: 35px;
-	color: ${props => props.theme.colors.primary};
+	color: ${(props) => props.theme.colors.primary};
 	cursor: pointer;
 	font-size: 14px;
 	-webkit-tap-highlight-color: transparent;
@@ -83,7 +115,7 @@ const CheckboxWrap = styled.label`
 		background-color: transparent;
 	}
 	input:checked ~ span.checkbox {
-		background-color: ${props => props.theme.colors.primary};
+		background-color: ${(props) => props.theme.colors.primary};
 	}
 	input:checked ~ span.checkbox::after {
 		display: block;
@@ -105,7 +137,7 @@ const CheckboxWrap = styled.label`
 		height: 25px;
 		width: 25px;
 		background-color: transparent;
-		border: 1px solid ${props => props.theme.colors.primary};
+		border: 1px solid ${(props) => props.theme.colors.primary};
 		border-radius: 4px;
 		&::after {
 			content: "";
@@ -121,7 +153,7 @@ const CheckboxWrap = styled.label`
 		}
 	}
 	a {
-		color: ${props => props.theme.colors.white};
+		color: ${(props) => props.theme.colors.white};
 		text-decoration: underline;
 	}
 	strong {

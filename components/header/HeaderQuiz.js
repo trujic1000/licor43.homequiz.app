@@ -8,10 +8,12 @@ import HeaderBgSmall from "~/assets/img/header-bg-small.png";
 
 const Wrapper = styled.header`
 	position: relative;
-	background-color: #000;
+	background-color: ${(props) => props.theme.colors.secondary};
 	background: url(${HeaderBgSmall});
 	background-size: cover;
 	background-repeat: no-repeat;
+	background-blend-mode: lighten;
+	mix-blend-mode: lighten;
 	height: 55px;
 	margin-bottom: 80px;
 	display: flex;
@@ -53,11 +55,11 @@ const Header = ({ withMenu }) => {
 };
 
 Header.propTypes = {
-	withMenu: PropTypes.bool
+	withMenu: PropTypes.bool,
 };
 
 Header.defaultProps = {
-	withMenu: true
+	withMenu: true,
 };
 
 export default Header;

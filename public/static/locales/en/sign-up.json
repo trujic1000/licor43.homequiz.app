@@ -5,5 +5,12 @@
 	"confirm-password": "Confirm Password",
 	"terms": "I confirm I am over 18 years old and I accept the",
 	"tac": "Terms & Conditions",
-	"newsletter": "I would like to receive information from"
+	"newsletter": "I would like to receive information from",
+	"name-is-required": "Name is required",
+	"invalid-email-address": "Invalid email address",
+	"email-is-required": "Email is required",
+	"password-must-be-6-characters": "Password must be at least 6 characters",
+	"password-is-required": "Password is required",
+	"passwords-must-match": "Passwords must match",
+	"you-must-accept-tac": "You Must Accept Terms & Conditions"
 }
