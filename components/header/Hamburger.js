@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Hamburger = ({ open, toggle }) => {
 	return (
-		<Wrapper>
+		<Wrapper open={open}>
 			<HamburgerButton
 				type="button"
 				className={open ? "is-active" : null}
@@ -26,7 +26,7 @@ Hamburger.propTypes = {
 export default Hamburger;
 
 const Wrapper = styled.div`
-	background: #151515;
+	background-color: ${(props) => props.theme.colors.secondary};
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -36,6 +36,11 @@ const Wrapper = styled.div`
 	top: 17px;
 	right: 32px;
 	z-index: 3;
+	${(props) =>
+		props.open === true &&
+		css`
+			background-color: #111;
+		`}
 `;
 
 const HamburgerButton = styled.button`

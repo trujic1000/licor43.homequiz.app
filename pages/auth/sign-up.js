@@ -122,7 +122,7 @@ const SignUp = () => {
 								</Link>
 							</Checkbox>
 							<Checkbox name="newsletter" style={{ top: -3 }}>
-								{t("newsletter")} <strong>Licor 43</strong>
+								<strong>Licor 43</strong>
 							</Checkbox>
 							<div className="btn-wrap">
 								<StyledLink as="button" type="submit" disabled={isSubmitting}>

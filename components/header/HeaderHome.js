@@ -5,6 +5,22 @@ import styled from "styled-components";
 import Header from "~/assets/img/header-home.png";
 import Icon from "~/components/icon";
 
+const HeaderHome = () => {
+	return (
+		<Wrapper>
+			<Link href="/">
+				<a>
+					<div className="header-home__logo-wrap">
+						<Icon name="logo" />
+					</div>
+				</a>
+			</Link>
+		</Wrapper>
+	);
+};
+
+export default HeaderHome;
+
 const Wrapper = styled.header`
 	position: relative;
 	background-color: ${(props) => props.theme.colors.secondary};
@@ -34,19 +50,3 @@ const Wrapper = styled.header`
 		}
 	}
 `;
-
-const HeaderHome = () => {
-	return (
-		<Wrapper>
-			<Link href="/">
-				<a>
-					<div className="header-home__logo-wrap">
-						<Icon name="logo" />
-					</div>
-				</a>
-			</Link>
-		</Wrapper>
-	);
-};
-
-export default HeaderHome;

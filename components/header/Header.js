@@ -7,6 +7,30 @@ import HeaderBgBig from "~/assets/img/header-bg-big.png";
 import HeaderBgSmall from "~/assets/img/header-bg-small.png";
 import Icon from "~/components/icon";
 
+const Header = ({ size }) => {
+	return (
+		<Wrapper size={size}>
+			<Link href="/">
+				<a>
+					<Icon name={size === "big" ? "logo" : "logo-alt"} />
+				</a>
+			</Link>
+		</Wrapper>
+	);
+};
+
+Header.propTypes = {
+	withMenu: PropTypes.bool,
+	size: PropTypes.string,
+};
+
+Header.defaultProps = {
+	withMenu: true,
+	size: "small",
+};
+
+export default Header;
+
 const Wrapper = styled.header`
 	position: relative;
 	background-color: ${(props) => props.theme.colors.secondary};
@@ -17,7 +41,7 @@ const Wrapper = styled.header`
 	background-blend-mode: lighten;
 	height: 55px;
 	margin-bottom: 5px;
-	z-index: 1;
+	z-index: 2;
 
 	svg {
 		width: 60px;
@@ -45,27 +69,3 @@ const Wrapper = styled.header`
 			}
 		`}
 `;
-
-const Header = ({ size }) => {
-	return (
-		<Wrapper size={size}>
-			<Link href="/">
-				<a>
-					<Icon name={size === "big" ? "logo" : "logo-alt"} />
-				</a>
-			</Link>
-		</Wrapper>
-	);
-};
-
-Header.propTypes = {
-	withMenu: PropTypes.bool,
-	size: PropTypes.string,
-};
-
-Header.defaultProps = {
-	withMenu: true,
-	size: "small",
-};
-
-export default Header;
