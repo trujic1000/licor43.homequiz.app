@@ -32,6 +32,10 @@ const Wrapper = styled.div`
 	justify-content: center;
 	height: 30px;
 	width: 55px;
+	position: absolute;
+	top: 17px;
+	right: 32px;
+	z-index: 3;
 `;
 
 const HamburgerButton = styled.button`
@@ -47,7 +51,6 @@ const HamburgerButton = styled.button`
 	margin: 0;
 	overflow: visible;
 	outline: none;
-	z-index: 100;
 	&.is-active .hamburger-inner,
 	&.is-active .hamburger-inner::before,
 	&.is-active .hamburger-inner::after {

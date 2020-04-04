@@ -17,7 +17,7 @@ const Wrapper = styled.header`
 	background-blend-mode: lighten;
 	height: 55px;
 	margin-bottom: 5px;
-	z-index: 99;
+	z-index: 1;
 
 	svg {
 		width: 60px;

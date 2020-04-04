@@ -12,7 +12,7 @@ const Wrapper = styled.header`
 	background-size: cover;
 	background-repeat: no-repeat;
 	height: 110px;
-	z-index: 99;
+	z-index: 1;
 
 	.header-home__logo-wrap {
 		width: 115px;

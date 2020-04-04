@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
+import Menu from "~/components/header/Menu";
 
 import { Header, HeaderQuiz, HeaderHome } from "../header";
 
@@ -15,8 +16,13 @@ const Layout = ({ title, headerType, children }) => {
 				{headerType === "home" && <HeaderHome />}
 				{headerType === "welcome" && <Header size="big" />}
 				{headerType === "auth" && <Header />}
-				{headerType === "quiz-no-menu" && <HeaderQuiz withMenu={false} />}
-				{headerType === "quiz" && <HeaderQuiz />}
+				{headerType === "quiz-no-menu" && <HeaderQuiz />}
+				{headerType === "quiz" && (
+					<>
+						<Menu />
+						<HeaderQuiz />
+					</>
+				)}
 				{children}
 			</>
 		</>
@@ -25,11 +31,11 @@ const Layout = ({ title, headerType, children }) => {
 
 Layout.propTypes = {
 	title: PropTypes.string.isRequired,
-	headerType: PropTypes.string
+	headerType: PropTypes.string,
 };
 
 Layout.defaultProps = {
-	headerType: "quiz"
+	headerType: "quiz",
 };
 
 export default Layout;

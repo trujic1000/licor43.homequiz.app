@@ -19,27 +19,27 @@ const Menu = () => {
 				<MenuHeader>
 					<span className="menu-title">{t("hosted-by")}</span>
 					<span className="menu-text">{user.name || "user"}</span>
-					<MenuList>
-						<MenuListItem>
-							<Link href="/new-game">
-								<a>{t("new-game")}</a>
-							</Link>
-						</MenuListItem>
-						<MenuListItem>
-							<Link href="/share">
-								<a>{t("invite-players")}</a>
-							</Link>
-						</MenuListItem>
-						<MenuListItem>
-							<Link href="/ranking">
-								<a>{t("ranking")}</a>
-							</Link>
-						</MenuListItem>
-					</MenuList>
-					<MenuLogo>
-						<img src="/img/logo.svg" alt="logo" />
-					</MenuLogo>
 				</MenuHeader>
+				<MenuList>
+					<MenuListItem>
+						<Link href="/new-game">
+							<a>{t("new-game")}</a>
+						</Link>
+					</MenuListItem>
+					<MenuListItem>
+						<Link href="/share">
+							<a>{t("invite-players")}</a>
+						</Link>
+					</MenuListItem>
+					<MenuListItem>
+						<Link href="/ranking">
+							<a>{t("ranking")}</a>
+						</Link>
+					</MenuListItem>
+				</MenuList>
+				<MenuLogo>
+					<img src="/img/logo.svg" alt="logo" />
+				</MenuLogo>
 			</MenuWrapper>
 		</>
 	);
@@ -60,7 +60,7 @@ const MenuWrapper = styled(Div100vh)`
 	right: 0;
 	top: 0;
 	width: 190px;
-	z-index: 99;
+	z-index: 2;
 	transition: all 300ms ease-in;
 	transform: translateX(100%);
 	padding: 60px 0 0;
@@ -70,8 +70,6 @@ const MenuWrapper = styled(Div100vh)`
 `;
 
 const MenuHeader = styled.div`
-	min-height: 140px;
-	flex: 1;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -92,21 +90,12 @@ const MenuHeader = styled.div`
 const MenuList = styled.ul`
 	flex: 1;
 	position: relative;
-	background: url(${menuBg});
-	min-height: 52vh;
+	background-color: rgba(0, 0, 0, 0.6);
+	background-image: url(${menuBg});
 	background-size: 200%;
+	background-blend-mode: overlay;
 	padding: 20px 20px 0;
 	line-height: 1.6;
-	&::after {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.8);
-		z-index: 0;
-	}
 `;
 
 const MenuListItem = styled.li`
@@ -124,6 +113,10 @@ const MenuListItem = styled.li`
 `;
 
 const MenuLogo = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 125px;
 	background: url(${menuBg});
 	padding: 16px 0;
 	img {

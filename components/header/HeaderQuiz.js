@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Menu from "./Menu";
 import HeaderBgSmall from "~/assets/img/header-bg-small.png";
 
-const Header = ({ withMenu }) => {
+const Header = () => {
 	return (
 		<Wrapper>
 			<Link href="/rules">
@@ -14,17 +14,8 @@ const Header = ({ withMenu }) => {
 					<img src="/img/logo-quiz.svg" alt="logo" />
 				</a>
 			</Link>
-			{withMenu && <Menu />}
 		</Wrapper>
 	);
-};
-
-Header.propTypes = {
-	withMenu: PropTypes.bool,
-};
-
-Header.defaultProps = {
-	withMenu: true,
 };
 
 export default Header;
@@ -43,7 +34,7 @@ const Wrapper = styled.header`
 	justify-content: flex-end;
 	align-items: center;
 	padding: 0 32px;
-	z-index: 99;
+	z-index: 1;
 
 	a.quiz-logo-wrap {
 		width: 126px;

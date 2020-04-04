@@ -24,6 +24,7 @@ export const Wrap100vh = styled(Div100vh)`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	z-index: 0;
 `;
 export const Wrapper = styled.div`
 	position: relative;
@@ -31,6 +32,7 @@ export const Wrapper = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	padding: 0 30px;
+	z-index: 0;
 `;
 
 export const TextField = styled(Field).attrs((props) => ({
