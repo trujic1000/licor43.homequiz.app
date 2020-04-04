@@ -8,7 +8,7 @@ import Link from "~/components/link";
 const Rules = () => {
 	const { t } = useTranslation("rules", { i18n });
 	return (
-		<Layout title="Terms and Conditions" headerType="quiz-no-menu">
+		<Layout title="Rules" headerType="quiz-no-menu">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>
 					{t("a-quiz-game")}

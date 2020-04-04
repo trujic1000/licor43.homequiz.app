@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useTranslation, i18n } from "~/i18n";
@@ -15,8 +16,9 @@ import { StyledLink } from "~/components/link";
 
 const NewGame = () => {
 	const { t } = useTranslation("new-game", { i18n });
+	const router = useRouter();
 	return (
-		<Layout title="Terms and Conditions" headerType="quiz-no-menu">
+		<Layout title="New Game" headerType="quiz-no-menu">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Formik
 					initialValues={{
@@ -26,10 +28,11 @@ const NewGame = () => {
 						quizName: Yup.string().required(t("quiz-name-is-required")),
 					})}
 					onSubmit={(values, { setSubmitting }) => {
-						setTimeout(() => {
-							alert(JSON.stringify(values, null, 2));
-							setSubmitting(false);
-						}, 1000);
+						// setTimeout(() => {
+						// 	alert(JSON.stringify(values, null, 2));
+						// 	setSubmitting(false);
+						// }, 1000);
+						router.push("/invite");
 					}}
 					validateOnChange={false}
 					validateOnBlur={false}
@@ -53,12 +56,7 @@ const NewGame = () => {
 									) : null}
 								</ErrorMessage>
 							</div>
-							<StyledLink
-								as="button"
-								type="submit"
-								disabled={isSubmitting}
-								style={{ margin: "20px auto" }}
-							>
+							<StyledLink as="button" type="submit" disabled={isSubmitting}>
 								{isSubmitting ? (
 									<Icon name="spinner" size="14" />
 								) : (

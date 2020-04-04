@@ -19,9 +19,9 @@ export const StyledLink = styled.a`
 	max-width: 240px;
 	width: 100%;
 	margin: 0 auto 10px auto;
-	background-color: ${props => props.theme.colors.primary};
-	color: ${props => props.theme.colors.secondary};
-	padding: ${props => (props.as === "button" ? "12px 35px" : "10px 35px")};
+	background-color: ${(props) => props.theme.colors.primary};
+	color: ${(props) => props.theme.colors.secondary};
+	padding: ${(props) => (props.as === "button" ? "12px 35px" : "10px 35px")};
 	text-align: center;
 	font-size: 15px;
 	font-family: "Roboto", sans-serif;
@@ -31,55 +31,61 @@ export const StyledLink = styled.a`
 	transition: 0.3s ease;
 	&:hover, &:disabled {
 		background-color: #000;
-		color: ${props => props.theme.colors.primary};
+		color: ${(props) => props.theme.colors.primary};
 	}
 	&:focus {
 		outline: none;
 	}
 
-	${props =>
+	${(props) =>
+		props.as === "button" &&
+		css`
+			margin: 20px auto;
+		`}
+
+	${(props) =>
 		props.color === "white" &&
 		css`
-			background-color: ${props => props.theme.colors.white};
-			color: ${props => props.theme.colors.secondary};
-			border: 2px solid ${props => props.theme.colors.white};
+			background-color: ${(props) => props.theme.colors.white};
+			color: ${(props) => props.theme.colors.secondary};
+			border: 2px solid ${(props) => props.theme.colors.white};
 			&:hover {
-				background-color: ${props => props.theme.colors.secondary};
-				color: ${props => props.theme.colors.white};
-				border: 2px solid ${props => props.theme.colors.white};
+				background-color: ${(props) => props.theme.colors.secondary};
+				color: ${(props) => props.theme.colors.white};
+				border: 2px solid ${(props) => props.theme.colors.white};
 			}
 		`}
 
-	${props =>
-		props.color === "green" &&
+	${(props) =>
+		props.variant === "whatsapp" &&
 		css`
 			background-color: #1db954;
-			color: ${props => props.theme.colors.white};
+			color: ${(props) => props.theme.colors.white};
 			border: 2px solid #1db954;
 			&:hover {
-				background-color: ${props => props.theme.colors.white};
+				background-color: ${(props) => props.theme.colors.white};
 				color: #1db954;
 				border: 2px solid #1db954;
 			}
 		`}
 
-  ${props =>
+  ${(props) =>
 		props.variant === "invert" &&
 		css`
-			background-color: ${props => props.theme.colors.secondary};
-			color: ${props => props.theme.colors.primary};
-			border: 3px solid ${props => props.theme.colors.primary};
+			background-color: ${(props) => props.theme.colors.secondary};
+			color: ${(props) => props.theme.colors.primary};
+			border: 3px solid ${(props) => props.theme.colors.primary};
 			&:hover {
-				background-color: ${props => props.theme.colors.primary};
-				color: ${props => props.theme.colors.secondary};
+				background-color: ${(props) => props.theme.colors.primary};
+				color: ${(props) => props.theme.colors.secondary};
 			}
 			&:disabled {
-				background-color: ${props => props.theme.colors.secondary};
-				color: ${props => props.theme.colors.primary};
+				background-color: ${(props) => props.theme.colors.secondary};
+				color: ${(props) => props.theme.colors.primary};
 			}
 		`}
 
-  ${props =>
+  ${(props) =>
 		props.variant === "facebook" &&
 		css`
 			display: flex;
@@ -87,7 +93,7 @@ export const StyledLink = styled.a`
 			text-align: left;
 			font-weight: normal;
 			background-color: #3b5998;
-			color: ${props => props.theme.colors.white};
+			color: ${(props) => props.theme.colors.white};
 			padding: 4px 7px;
 			margin-bottom: 10px;
 

@@ -2,6 +2,29 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+const Hamburger = ({ open, toggle }) => {
+	return (
+		<Wrapper>
+			<HamburgerButton
+				type="button"
+				className={open ? "is-active" : null}
+				onClick={() => toggle((prevState) => !prevState)}
+			>
+				<HamburgerBox>
+					<HamburgerInner className="hamburger-inner" />
+				</HamburgerBox>
+			</HamburgerButton>
+		</Wrapper>
+	);
+};
+
+Hamburger.propTypes = {
+	open: PropTypes.bool,
+	toggle: PropTypes.func.isRequired,
+};
+
+export default Hamburger;
+
 const Wrapper = styled.div`
 	background: #151515;
 	display: flex;
@@ -24,11 +47,11 @@ const HamburgerButton = styled.button`
 	margin: 0;
 	overflow: visible;
 	outline: none;
-	z-index: 6;
+	z-index: 100;
 	&.is-active .hamburger-inner,
 	&.is-active .hamburger-inner::before,
 	&.is-active .hamburger-inner::after {
-		background-color: ${props => props.theme.colors.primary};
+		background-color: ${(props) => props.theme.colors.primary};
 	}
 	&.is-active .hamburger-inner {
 		transform: translate3d(0, 10px, 0) rotate(45deg);
@@ -56,7 +79,7 @@ const HamburgerInner = styled.span`
 	margin-top: -2px;
 	width: 40px;
 	height: 4px;
-	background-color: ${props => props.theme.colors.primary};
+	background-color: ${(props) => props.theme.colors.primary};
 	border-radius: 4px;
 	position: absolute;
 	top: 2px;
@@ -68,7 +91,7 @@ const HamburgerInner = styled.span`
 		display: block;
 		width: 40px;
 		height: 4px;
-		background-color: ${props => props.theme.colors.primary};
+		background-color: ${(props) => props.theme.colors.primary};
 		border-radius: 4px;
 		position: absolute;
 		transition: all 300ms ease;
@@ -81,26 +104,3 @@ const HamburgerInner = styled.span`
 		top: 20px;
 	}
 `;
-
-const Hamburger = ({ open, toggle }) => {
-	return (
-		<Wrapper>
-			<HamburgerButton
-				type="button"
-				className={open ? "is-active" : null}
-				onClick={() => toggle(prevState => !prevState)}
-			>
-				<HamburgerBox>
-					<HamburgerInner className="hamburger-inner" />
-				</HamburgerBox>
-			</HamburgerButton>
-		</Wrapper>
-	);
-};
-
-Hamburger.propTypes = {
-	open: PropTypes.bool,
-	toggle: PropTypes.func.isRequired
-};
-
-export default Hamburger;

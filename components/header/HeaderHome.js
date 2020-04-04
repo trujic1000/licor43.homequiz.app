@@ -7,18 +7,18 @@ import Icon from "~/components/icon";
 
 const Wrapper = styled.header`
 	position: relative;
-	background-color: ${props => props.theme.colors.secondary};
+	background-color: ${(props) => props.theme.colors.secondary};
 	background: url(${Header});
 	background-size: cover;
 	background-repeat: no-repeat;
 	height: 110px;
-	z-index: 5;
+	z-index: 99;
 
 	.header-home__logo-wrap {
 		width: 115px;
 		height: 115px;
-		border: 8px solid ${props => props.theme.colors.secondary};
-		background: ${props => props.theme.colors.secondary};
+		border: 8px solid ${(props) => props.theme.colors.secondary};
+		background: ${(props) => props.theme.colors.secondary};
 		border-radius: 100px;
 		position: absolute;
 		top: 50%;

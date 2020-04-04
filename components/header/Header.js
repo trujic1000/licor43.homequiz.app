@@ -9,15 +9,15 @@ import Icon from "~/components/icon";
 
 const Wrapper = styled.header`
 	position: relative;
-	background-color: ${props => props.theme.colors.secondary};
-	background-image: ${props =>
+	background-color: ${(props) => props.theme.colors.secondary};
+	background-image: ${(props) =>
 		props.size === "big" ? `url(${HeaderBgBig})` : `url(${HeaderBgSmall})`};
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-blend-mode: lighten;
 	height: 55px;
 	margin-bottom: 5px;
-	z-index: 5;
+	z-index: 99;
 
 	svg {
 		width: 60px;
@@ -26,12 +26,12 @@ const Wrapper = styled.header`
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		border: 8px solid ${props => props.theme.colors.secondary};
-		background: ${props => props.theme.colors.secondary};
+		border: 8px solid ${(props) => props.theme.colors.secondary};
+		background: ${(props) => props.theme.colors.secondary};
 		border-radius: 100px;
 	}
 
-	${props =>
+	${(props) =>
 		props.size === "big" &&
 		css`
 			height: 110px;
@@ -60,12 +60,12 @@ const Header = ({ size }) => {
 
 Header.propTypes = {
 	withMenu: PropTypes.bool,
-	size: PropTypes.string
+	size: PropTypes.string,
 };
 
 Header.defaultProps = {
 	withMenu: true,
-	size: "small"
+	size: "small",
 };
 
 export default Header;
