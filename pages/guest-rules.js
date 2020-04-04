@@ -1,9 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
-import { Wrap100vh, Heading } from "~/components/elements";
+import { Heading } from "~/components/elements";
 import Layout from "~/components/layout";
 import Link from "~/components/link";
+import { Wrapper } from "./rules";
 
 const Rules = () => {
 	const { t } = useTranslation("rules", { i18n });
@@ -33,18 +33,3 @@ Rules.getInitialProps = async () => ({
 });
 
 export default Rules;
-
-const Wrapper = styled(Wrap100vh)`
-	padding: 0 30px;
-	ol {
-		list-style-type: decimal;
-		li {
-			margin: 0 0 10px 15px;
-		}
-	}
-	span.text-center {
-		text-align: center;
-		color: ${(props) => props.theme.colors.white};
-		font-weight: bold;
-	}
-`;

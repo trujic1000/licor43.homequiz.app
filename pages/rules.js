@@ -20,7 +20,7 @@ const Rules = () => {
 					<li>{t("choose-a-category")}</li>
 					<li>{t("write-your-most-creative-answer")}</li>
 					<li>{t("vote-for-your-favorite-answer")}</li>
-					<li>{t("dont-close-your-browser")}</li>
+					<li className="text-white">{t("dont-close-your-browser")}</li>
 				</ol>
 				<span className="text-center">Make sure to become the winner</span>
 				<Link href="/new-game" style={{ margin: "20px auto" }}>
@@ -37,13 +37,13 @@ Rules.getInitialProps = async () => ({
 
 export default Rules;
 
-const Wrapper = styled(Wrap100vh)`
+export const Wrapper = styled(Wrap100vh)`
 	padding: 0 30px;
 	ol {
 		list-style-type: decimal;
 		li {
 			margin: 0 0 10px 15px;
-			&:last-of-type {
+			&.text-white {
 				color: ${(props) => props.theme.colors.white};
 				font-weight: bold;
 			}

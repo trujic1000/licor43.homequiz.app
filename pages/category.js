@@ -1,10 +1,11 @@
 import React from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
 import Icon from "~/components/icon";
-import Link, { StyledLink } from "~/components/link";
+import { StyledLink } from "~/components/link";
 
 const Category = () => {
 	const { t } = useTranslation("category", { i18n });
@@ -16,30 +17,46 @@ const Category = () => {
 					<span>{t("a-category")}</span>
 				</Heading>
 				<CategoryWrap>
-					<CategoryItem>
-						<div className="category-item__img">
-							<Icon name="quotes" />
-						</div>
-						<div className="category-item__text">How would you call?</div>
-					</CategoryItem>
-					<CategoryItem>
-						<div className="category-item__img">
-							<Icon name="eye" />
-						</div>
-						<div className="category-item__text">What can you see?</div>
-					</CategoryItem>
-					<CategoryItem>
-						<div className="category-item__img">
-							<Icon name="ear" />
-						</div>
-						<div className="category-item__text">What is this sound?</div>
-					</CategoryItem>
-					<CategoryItem>
-						<div className="category-item__img">
-							<Icon name="trig" />
-						</div>
-						<div className="category-item__text">What is it made of?</div>
-					</CategoryItem>
+					<Link href="/question">
+						<a>
+							<CategoryItem>
+								<div className="category-item__img">
+									<Icon name="quotes" />
+								</div>
+								<div className="category-item__text">How would you call?</div>
+							</CategoryItem>
+						</a>
+					</Link>
+					<Link href="/question">
+						<a>
+							<CategoryItem>
+								<div className="category-item__img">
+									<Icon name="eye" />
+								</div>
+								<div className="category-item__text">What can you see?</div>
+							</CategoryItem>
+						</a>
+					</Link>
+					<Link href="/question">
+						<a>
+							<CategoryItem>
+								<div className="category-item__img">
+									<Icon name="ear" />
+								</div>
+								<div className="category-item__text">What is this sound?</div>
+							</CategoryItem>
+						</a>
+					</Link>
+					<Link href="/question">
+						<a>
+							<CategoryItem>
+								<div className="category-item__img">
+									<Icon name="trig" />
+								</div>
+								<div className="category-item__text">What is it made of?</div>
+							</CategoryItem>
+						</a>
+					</Link>
 				</CategoryWrap>
 			</Wrapper>
 		</Layout>

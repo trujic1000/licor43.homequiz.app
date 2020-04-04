@@ -4,6 +4,7 @@ import Div100vh from "react-div-100vh";
 import { useField, Field } from "formik";
 
 export const Heading = styled.div`
+	position: relative;
 	padding: 17px 0;
 	font-weight: bold;
 	font-size: 40px;
