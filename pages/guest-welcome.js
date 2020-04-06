@@ -98,7 +98,7 @@ const Wrapper = styled(Wrap100vh)`
 		display: block;
 		width: 90%;
 		margin: 0 auto 20px auto;
-		font-size: 24px;
+		font-size: 20px;
 		font-weight: bold;
 		color: ${(props) => props.theme.colors.primary};
 		line-height: 1.3;
