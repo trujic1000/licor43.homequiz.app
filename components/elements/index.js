@@ -94,7 +94,7 @@ export const Checkbox = ({ style, children, ...props }) => {
 				{children}
 			</CheckboxWrap>
 			<ErrorMessage style={{ textIndent: 35 }}>
-				{meta.touched && meta.error ? <span>{"*" + meta.error}</span> : null}
+				{meta.error ? <span>{"*" + meta.error}</span> : null}
 			</ErrorMessage>
 		</>
 	);

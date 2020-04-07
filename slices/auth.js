@@ -8,7 +8,25 @@ let initialState = {
 	loading: "idle",
 };
 
-const login = createAsyncThunk(
+export const register = createAsyncThunk(
+	"auth/register",
+	async (data, { rejectWithValue }) => {
+		try {
+			const response = await authAPI.register(data);
+			// Set token to local storage
+			localStorage.setItem("token", response.access_token);
+			localStorage.setItem("token_expiration", response.expires_at);
+
+			const user = await authAPI.loadUser();
+			// TODO: Router push to /rules
+			return user;
+		} catch (error) {
+			return rejectWithValue(error.response);
+		}
+	}
+);
+
+export const login = createAsyncThunk(
 	"auth/login",
 	async (data, { rejectWithValue }) => {
 		try {
@@ -16,6 +34,7 @@ const login = createAsyncThunk(
 			// Set token to local storage
 			localStorage.setItem("token", response.access_token);
 			localStorage.setItem("token_expiration", response.expires_at);
+
 			const user = await authAPI.loadUser();
 			// TODO: Router push to /rules
 			return user;
@@ -60,6 +79,24 @@ const auth = createSlice({
 			}
 		},
 		[login.rejected]: (state, action) => {
+			if (state.loading === "pending") {
+				state.loading = "idle";
+				state.error = action.error;
+			}
+		},
+		[register.pending]: (state, action) => {
+			if (state.loading === "idle") {
+				state.loading = "pending";
+			}
+		},
+		[register.fulfilled]: (state, action) => {
+			if (state.loading === "pending") {
+				state.loading = "idle";
+				state.isAuthenticated = true;
+				state.user = action.payload;
+			}
+		},
+		[register.rejected]: (state, action) => {
 			if (state.loading === "pending") {
 				state.loading = "idle";
 				state.error = action.error;

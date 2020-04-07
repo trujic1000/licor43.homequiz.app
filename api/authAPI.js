@@ -5,7 +5,7 @@ const register = (data) => {
 	return request({
 		url: `${BASE_URL}/api/auth/register`,
 		method: "POST",
-		data,
+		body: data,
 	});
 };
 
@@ -14,7 +14,7 @@ const login = (data) => {
 	return request({
 		url: `${BASE_URL}/api/auth/login`,
 		method: "POST",
-		data,
+		body: data,
 	});
 };
 
@@ -23,7 +23,7 @@ const facebookLogin = (data) => {
 	return request({
 		url: `${BASE_URL}/api/auth/login/facebook`,
 		method: "POST",
-		data,
+		body: data,
 	});
 };
 

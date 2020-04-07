@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { isMobileSafari } from "react-device-detect";
 import styled, { css } from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
 import { TextField, ErrorMessage, Heading } from "~/components/elements";
 import { Wrapper } from "./sign-up";
+import { login } from "~/slices/auth";
 import Layout from "~/components/layout";
 import { StyledLink } from "~/components/link";
 import Icon from "~/components/icon";
@@ -13,6 +15,7 @@ import Icon from "~/components/icon";
 const SignIn = () => {
 	const { t } = useTranslation(["sign-in", "common"], { i18n });
 	const [isSafari, setIsSafari] = useState("no");
+	const dispatch = useDispatch();
 	useEffect(() => {
 		if (isMobileSafari) {
 			setIsSafari("yes");
@@ -40,10 +43,12 @@ const SignIn = () => {
 						password: Yup.string().required(t("password-is-required")),
 					})}
 					onSubmit={(values, { setSubmitting }) => {
-						setTimeout(() => {
-							alert(JSON.stringify(values, null, 2));
-							setSubmitting(false);
-						}, 1000);
+						dispatch(login(values));
+						setSubmitting(false);
+						// setTimeout(() => {
+						// 	alert(JSON.stringify(values, null, 2));
+						// 	setSubmitting(false);
+						// }, 1000);
 					}}
 					validateOnChange={false}
 					validateOnBlur={false}
@@ -58,9 +63,7 @@ const SignIn = () => {
 									autoComplete="new-password"
 								/>
 								<ErrorMessage>
-									{errors.email && touched.email ? (
-										<span>{"*" + errors.email}</span>
-									) : null}
+									{errors.email ? <span>{"*" + errors.email}</span> : null}
 								</ErrorMessage>
 								<StyledTextField
 									name="password"
@@ -70,7 +73,7 @@ const SignIn = () => {
 									autoComplete="new-password"
 								/>
 								<ErrorMessage>
-									{errors.password && touched.password ? (
+									{errors.password ? (
 										<span>{"*" + errors.password}</span>
 									) : null}
 								</ErrorMessage>

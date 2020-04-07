@@ -7,12 +7,12 @@ async function request({ url, method, body }) {
 		headers: {
 			Authorization: "Bearer " + localStorage.getItem("token") || undefined,
 			"Content-Type": "application/json",
-			Accept: "application/json"
+			Accept: "application/json",
 		},
 		body: body ? JSON.stringify(body) : undefined,
 		agent: new https.Agent({
-			rejectUnauthorized: false
-		})
+			rejectUnauthorized: false,
+		}),
 	});
 
 	if (res.ok) return res.json();
