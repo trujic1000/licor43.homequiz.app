@@ -5,7 +5,7 @@ let initialState = {
 	isAuthenticated: false,
 	user: {},
 	error: null,
-	loading: "idle"
+	loading: "idle",
 };
 
 const login = createAsyncThunk(
@@ -17,7 +17,7 @@ const login = createAsyncThunk(
 			localStorage.setItem("token", response.access_token);
 			localStorage.setItem("token_expiration", response.expires_at);
 			const user = await authAPI.loadUser();
-			// Router push to /rules
+			// TODO: Router push to /rules
 			return user;
 		} catch (error) {
 			return rejectWithValue(error.response);
@@ -38,13 +38,13 @@ const auth = createSlice({
 			state.user = {};
 			state.errors = action.payload;
 		},
-		logoutUser: state => {
+		logoutUser: (state) => {
 			// Remove token from local storage
 			localStorage.removeItem("token");
 			// Set isAuthenticated to false and user to {}
 			state.isAuthenticated = false;
 			state.user = {};
-		}
+		},
 	},
 	extraReducers: {
 		[login.pending]: (state, action) => {
@@ -64,8 +64,8 @@ const auth = createSlice({
 				state.loading = "idle";
 				state.error = action.error;
 			}
-		}
-	}
+		},
+	},
 });
 
 export const { setCurrentUser, logoutUser, authFailed } = auth.actions;

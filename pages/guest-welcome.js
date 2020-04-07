@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import { useTranslation, i18n } from "~/i18n";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import {
@@ -17,15 +18,17 @@ import { StyledLink } from "~/components/link";
 
 const GuestWelcome = () => {
 	const router = useRouter();
+	const { t } = useTranslation(["guest-welcome", "sign-up", "common"], {
+		i18n,
+	});
 	return (
 		<Layout title="Guest Welcome" headerType="welcome">
 			<Wrapper style={{ height: "calc(100rvh - 236px)" }}>
-				<Heading>Welcome</Heading>
-				<span className="text-big">
-					You have been invited to the most creative quiz game ever
-				</span>
+				<Heading>{t("common:welcome")}</Heading>
+				<span className="text-big">{t("you-have-been-invited")}</span>
 				<span className="text-medium">
-					Please <span className="text-white">insert your name</span>
+					{t("please")}{" "}
+					<span className="text-white">{t("insert-your-name")}</span>
 				</span>
 				<Formik
 					initialValues={{
@@ -33,10 +36,10 @@ const GuestWelcome = () => {
 						terms: false,
 					}}
 					validationSchema={Yup.object({
-						name: Yup.string().required("Name is required"),
+						name: Yup.string().required(t("sign-up:name-is-required")),
 						terms: Yup.boolean().oneOf(
 							[true],
-							"You must accept Terms & Conditions"
+							t("sign-up:you-must-accept-tac")
 						),
 					})}
 					onSubmit={(values, { setSubmitting }) => {
@@ -64,9 +67,9 @@ const GuestWelcome = () => {
 									) : null}
 								</ErrorMessage>
 								<Checkbox name="terms" style={{ top: -3 }}>
-									I confirm I am over 18 years old and I accept the{" "}
+									{t("sign-up:terms")}{" "}
 									<Link href="/terms-and-conditions">
-										<a className="color-white">Terms and Conditions</a>
+										<a className="color-white">{t("sign-up:tac")}</a>
 									</Link>
 								</Checkbox>
 							</div>
@@ -74,7 +77,7 @@ const GuestWelcome = () => {
 								{isSubmitting ? (
 									<Icon name="spinner" size="14" />
 								) : (
-									<span>Continue</span>
+									<span>{t("common:continue")}</span>
 								)}
 							</StyledLink>
 						</StyledForm>
@@ -84,6 +87,10 @@ const GuestWelcome = () => {
 		</Layout>
 	);
 };
+
+GuestWelcome.getInitialProps = async () => ({
+	namespacesRequired: ["guest-welcome", "sign-up", "common"],
+});
 
 export default GuestWelcome;
 

@@ -1,5 +1,9 @@
 {
 	"welcome": "Welcome",
 	"sign-up": "Sign Up",
-	"sign-in": "Sign In"
+	"sign-in": "Sign In",
+	"start-the-game": "Start the Game",
+	"submit-your-answer": "Submit your Answer",
+	"continue": "Continue",
+	"join-the-game": "Join the Game"
 }

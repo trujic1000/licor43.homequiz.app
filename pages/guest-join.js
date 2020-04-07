@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import { useTranslation, i18n } from "~/i18n";
 import ReactCodeInput from "react-code-input";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
@@ -9,15 +10,17 @@ import { StyledLink } from "~/components/link";
 const Join = () => {
 	const [code, setCode] = useState("");
 	const router = useRouter();
+	const { t } = useTranslation(["guest-welcome", "common"], {
+		i18n,
+	});
 	return (
 		<Layout title="Guest Join" headerType="welcome">
 			<Wrapper style={{ height: "calc(100rvh - 236px)" }}>
-				<Heading>Welcome</Heading>
-				<span className="text-big">
-					You have been invited to the most creative quiz game ever
-				</span>
+				<Heading>{t("common:welcome")}</Heading>
+				<span className="text-big">{t("you-have-been-invited")}</span>
 				<span className="text-medium">
-					Please <span className="text-white">insert game code</span>
+					{t("please")}{" "}
+					<span className="text-white">{t("insert-game-code")}</span>
 				</span>
 				<ReactCodeInput
 					forceUppercase
@@ -31,12 +34,16 @@ const Join = () => {
 						router.push("/guest-welcome");
 					}}
 				>
-					<span>Join the Game</span>
+					<span>{t("common:join-the-game")}</span>
 				</StyledLink>
 			</Wrapper>
 		</Layout>
 	);
 };
+
+Join.getInitialProps = async () => ({
+	namespacesRequired: ["guest-welcome", "common"],
+});
 
 export default Join;
 

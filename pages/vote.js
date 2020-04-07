@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
 import { StyledLink } from "~/components/link";
@@ -26,12 +27,13 @@ const answers = [
 
 const Vote = () => {
 	const [voteId, setVoteId] = useState(null);
+	const { t } = useTranslation("vote", { i18n });
 	return (
 		<Layout title="Guest Welcome" headerType="quiz">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>
-					Vote for
-					<span>your favorite</span>
+					{t("vote-for")}
+					<span>{t("your-favorite")}</span>
 					<span className="text-uppercase">A group of zebras</span>
 				</Heading>
 				<VoteWrap>
@@ -59,6 +61,10 @@ const Vote = () => {
 		</Layout>
 	);
 };
+
+Vote.getInitialProps = async () => ({
+	namespacesRequired: ["vote"],
+});
 
 export default Vote;
 

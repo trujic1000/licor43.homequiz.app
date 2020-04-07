@@ -6,22 +6,24 @@ import Link from "~/components/link";
 import { Wrapper } from "./rules";
 
 const Rules = () => {
-	const { t } = useTranslation("rules", { i18n });
+	const { t } = useTranslation(["guest-rules", "rules", "common"], { i18n });
 	return (
 		<Layout title="Rules" headerType="quiz-no-menu">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>
-					{t("a-quiz-game")}
-					<span>{t("simplified")}</span>
+					{t("rules:a-quiz-game")}
+					<span>{t("rules:simplified")}</span>
 				</Heading>
 				<ol>
-					<li>Check on the question</li>
-					<li>Write your most creative answer</li>
-					<li>Vote for your favorite answer</li>
+					<li>{t("check-on-the-question")}</li>
+					<li>{t("write-your-most-creative-answer")}</li>
+					<li>{t("vote-for-your-favorite-answer")}</li>
 				</ol>
-				<span className="text-center">Make sure to become the winner</span>
+				<span className="text-center">
+					{t("rules:make-sure-to-become-winner")}
+				</span>
 				<Link href="/new-game" style={{ margin: "20px auto" }}>
-					Start the Game
+					{t("common:start-the-game")}
 				</Link>
 			</Wrapper>
 		</Layout>
@@ -29,7 +31,7 @@ const Rules = () => {
 };
 
 Rules.getInitialProps = async () => ({
-	namespacesRequired: ["rules"],
+	namespacesRequired: ["guest-rules", "rules", "common"],
 });
 
 export default Rules;

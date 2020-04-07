@@ -22,7 +22,7 @@ const Rules = () => {
 					<li>{t("vote-for-your-favorite-answer")}</li>
 					<li className="text-white">{t("dont-close-your-browser")}</li>
 				</ol>
-				<span className="text-center">Make sure to become the winner</span>
+				<span className="text-center">{t("make-sure-to-become-winner")}</span>
 				<Link href="/new-game" style={{ margin: "20px auto" }}>
 					{t("start-new-game")}
 				</Link>

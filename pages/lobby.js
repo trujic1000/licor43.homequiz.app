@@ -9,8 +9,8 @@ const Lobby = () => {
 	return (
 		<Layout title="Lobby" headerType="quiz-no-menu">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
-				<Heading>Lobby</Heading>
-				<span>Waiting for the game to start...</span>
+				<Heading>{t("lobby")}</Heading>
+				<span>{t("waiting-for-the-game-to-start")}</span>
 			</Wrapper>
 		</Layout>
 	);

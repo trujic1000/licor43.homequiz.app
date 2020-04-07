@@ -56,7 +56,7 @@ const Ranking = () => {
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>
 					<span className="text-white" style={{ fontSize: 36 }}>
-						Current Ranking
+						{t("current-ranking")}
 					</span>
 				</Heading>
 				<RankingWrap>
@@ -75,7 +75,6 @@ const Ranking = () => {
 	);
 };
 
-// TODO: Add translation for winner-round
 Ranking.getInitialProps = async () => ({
 	namespacesRequired: ["ranking"],
 });

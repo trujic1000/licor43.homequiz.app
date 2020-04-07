@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useTranslation, i18n } from "~/i18n";
 import styled from "styled-components";
 import { Formik, Form } from "formik";
 import { Wrap100vh, Heading, TextField } from "~/components/elements";
@@ -11,12 +12,13 @@ import zebras from "~/assets/img/zebras.png";
 
 const Question = () => {
 	const router = useRouter();
+	const { t } = useTranslation(["question", "common"], { i18n });
 	return (
 		<Layout title="Guest Welcome" headerType="quiz">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>
-					How would
-					<span>you call</span>
+					{t("how-would")}
+					<span>{t("you-call")}</span>
 					<span className="question-mark">?</span>
 				</Heading>
 				<QuestionWrap>
@@ -46,7 +48,7 @@ const Question = () => {
 								{isSubmitting ? (
 									<Icon name="spinner" size="14" />
 								) : (
-									<span>Submit your Answer</span>
+									<span>{t("common:submit-your-answer")}</span>
 								)}
 							</StyledLink>
 						</StyledForm>
@@ -56,6 +58,10 @@ const Question = () => {
 		</Layout>
 	);
 };
+
+Question.getInitialProps = async () => ({
+	namespacesRequired: ["question", "common"],
+});
 
 export default Question;
 

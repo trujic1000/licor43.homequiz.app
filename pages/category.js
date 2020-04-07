@@ -23,7 +23,9 @@ const Category = () => {
 								<div className="category-item__img">
 									<Icon name="quotes" />
 								</div>
-								<div className="category-item__text">How would you call?</div>
+								<div className="category-item__text">
+									{t("how-would-you-call")}
+								</div>
 							</CategoryItem>
 						</a>
 					</Link>
@@ -33,7 +35,9 @@ const Category = () => {
 								<div className="category-item__img">
 									<Icon name="eye" />
 								</div>
-								<div className="category-item__text">What can you see?</div>
+								<div className="category-item__text">
+									{t("what-can-you-see")}
+								</div>
 							</CategoryItem>
 						</a>
 					</Link>
@@ -43,7 +47,9 @@ const Category = () => {
 								<div className="category-item__img">
 									<Icon name="ear" />
 								</div>
-								<div className="category-item__text">What is this sound?</div>
+								<div className="category-item__text">
+									{t("what-is-this-sound")}
+								</div>
 							</CategoryItem>
 						</a>
 					</Link>
@@ -53,7 +59,9 @@ const Category = () => {
 								<div className="category-item__img">
 									<Icon name="trig" />
 								</div>
-								<div className="category-item__text">What is it made of?</div>
+								<div className="category-item__text">
+									{t("what-is-it-made-of")}
+								</div>
 							</CategoryItem>
 						</a>
 					</Link>
