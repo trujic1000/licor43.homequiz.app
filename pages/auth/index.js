@@ -1,9 +1,13 @@
 import React from "react";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import Layout from "~/components/layout";
-import Link from "~/components/link";
-import Icon from "~/components/icon";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useTranslation, i18n } from "~/i18n";
+import Layout from "~/components/layout";
+import Link, { StyledLink } from "~/components/link";
+import Icon from "~/components/icon";
+import { facebookLogin } from "~/slices/auth";
 import wcOverlay from "~/assets/img/wc-overlay.png";
 import wc1 from "~/assets/img/wc-1.png";
 import wc2 from "~/assets/img/wc-2.png";
@@ -12,6 +16,14 @@ import wc4 from "~/assets/img/wc-4.png";
 
 const Auth = () => {
 	const { t } = useTranslation(["auth", "common"], { i18n });
+	const router = useRouter();
+	const dispatch = useDispatch();
+	const language = useSelector((state) => state.language.current);
+
+	const responseFacebook = (response) => {
+		response.language = language;
+		facebookLogin({ data: response, router });
+	};
 	return (
 		<Layout title="Auth" headerType="welcome">
 			<WelcomeLayout>
@@ -30,13 +42,21 @@ const Auth = () => {
 				<Link href="/auth/sign-up" onClick={() => console.log("Sign Up")}>
 					{t("common:sign-up")}
 				</Link>
-				<Link
-					href="/auth"
-					variant="facebook"
-					onClick={() => console.log("Facebook")}
-				>
-					<Icon name="facebook" /> {t("continue-with-facebook")}
-				</Link>
+				<FacebookLogin
+					appId="2809198462450733"
+					disableMobileRedirect={true}
+					fields="name, email"
+					callback={responseFacebook}
+					render={(renderProps) => (
+						<StyledLink
+							as="button"
+							variant="facebook"
+							onClick={renderProps.onClick}
+						>
+							<Icon name="facebook" /> {t("continue-with-facebook")}
+						</StyledLink>
+					)}
+				/>
 				<Link
 					href="/auth/sign-in"
 					variant="invert"
@@ -50,7 +70,7 @@ const Auth = () => {
 };
 
 Auth.getInitialProps = async () => ({
-	namespacesRequired: ["auth", "common"]
+	namespacesRequired: ["auth", "common"],
 });
 
 export default Auth;
@@ -89,7 +109,7 @@ const WelcomeLayout = styled.div`
 		grid-row: span 4;
 		background-image: url(${wc1});
 		span.welcome {
-			color: ${props => props.theme.colors.primary};
+			color: ${(props) => props.theme.colors.primary};
 			font-size: 38px;
 			line-height: 1.2;
 			text-align: center;
@@ -111,7 +131,7 @@ const WelcomeLayout = styled.div`
 			bottom: -12px;
 			width: 140%;
 			left: 35%;
-			color: ${props => props.theme.colors.primary};
+			color: ${(props) => props.theme.colors.primary};
 			line-height: 1.2;
 			z-index: 5;
 			text-align: center;
@@ -124,7 +144,7 @@ const WelcomeLayout = styled.div`
 `;
 
 const Text = styled.div`
-	background: ${props => props.theme.colors.primary};
+	background: ${(props) => props.theme.colors.primary};
 	color: #000;
 	padding: 5px 40px 5px 5px;
 	font-weight: bold;
@@ -132,7 +152,7 @@ const Text = styled.div`
 	line-height: 1.2;
 	span.ever {
 		font-size: 2.5vh;
-		color: ${props => props.theme.colors.white};
+		color: ${(props) => props.theme.colors.white};
 		text-transform: capitalize;
 	}
 `;
@@ -145,7 +165,12 @@ const ButtonWrap = styled.div`
 	margin-top: -60px;
 	z-index: 5;
 
-	a {
+	a,
+	button {
 		z-index: 5;
+	}
+
+	button {
+		margin: 0 0 10px 0;
 	}
 `;

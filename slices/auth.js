@@ -44,6 +44,26 @@ export const login = createAsyncThunk(
 	}
 );
 
+export const facebookLogin = createAsyncThunk(
+	"auth/login",
+	async ({ data, router }, { rejectWithValue }) => {
+		try {
+			const response = await authAPI.facebookLogin({
+				accessToken: data.accessToken,
+				language: data.language,
+			});
+			// Set token to local storage
+			localStorage.setItem("token", response.access_token);
+			localStorage.setItem("token_expiration", response.expires_at);
+			// Get currently logged in user
+			router.push("/rules");
+			return data;
+		} catch (error) {
+			return rejectWithValue(error.response);
+		}
+	}
+);
+
 export const loadUser = createAsyncThunk(
 	"auth/loadUser",
 	async (undefined, { rejectWithValue, dispatch }) => {
@@ -68,7 +88,7 @@ const auth = createSlice({
 		authFailed: (state, action) => {
 			state.isAuthenticated = false;
 			state.user = {};
-			state.errors = action.payload;
+			state.error = action.payload;
 		},
 		logoutUser: (state) => {
 			// Remove token from local storage
@@ -82,6 +102,7 @@ const auth = createSlice({
 		[login.pending]: (state, action) => {
 			if (state.loading === "idle") {
 				state.loading = "pending";
+				state.error = null;
 			}
 		},
 		[login.fulfilled]: (state, action) => {
@@ -94,12 +115,15 @@ const auth = createSlice({
 		[login.rejected]: (state, action) => {
 			if (state.loading === "pending") {
 				state.loading = "idle";
-				state.error = action.error;
+				state.error = {
+					message: "Authentication failed",
+				};
 			}
 		},
 		[register.pending]: (state, action) => {
 			if (state.loading === "idle") {
 				state.loading = "pending";
+				state.error = null;
 			}
 		},
 		[register.fulfilled]: (state, action) => {
@@ -112,7 +136,9 @@ const auth = createSlice({
 		[register.rejected]: (state, action) => {
 			if (state.loading === "pending") {
 				state.loading = "idle";
-				state.error = action.error;
+				state.error = {
+					message: "Authentication failed",
+				};
 			}
 		},
 	},

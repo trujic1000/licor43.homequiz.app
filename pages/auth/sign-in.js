@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
 import { isMobileSafari } from "react-device-detect";
@@ -18,6 +18,8 @@ const SignIn = () => {
 	const [isSafari, setIsSafari] = useState("no");
 	const dispatch = useDispatch();
 	const router = useRouter();
+	const { loading, error } = useSelector((state) => state.auth);
+	const isSubmitting = loading === "pending";
 	useEffect(() => {
 		if (isMobileSafari) {
 			setIsSafari("yes");
@@ -44,22 +46,18 @@ const SignIn = () => {
 							.required(t("email-is-required")),
 						password: Yup.string().required(t("password-is-required")),
 					})}
-					onSubmit={(values, { setSubmitting }) => {
+					onSubmit={(values) => {
 						dispatch(login({ data: values, router }));
-						// setTimeout(() => {
-						// 	alert(JSON.stringify(values, null, 2));
-						// 	setSubmitting(false);
-						// }, 1000);
 					}}
 					validateOnChange={false}
 					validateOnBlur={false}
 				>
-					{({ errors, touched, isSubmitting }) => (
+					{({ errors }) => (
 						<StyledForm>
 							<div>
 								<StyledTextField
 									name="email"
-									className={errors.email ? "invalid" : null}
+									className={errors.email || error ? "invalid" : null}
 									placeholder={t("your-email") + "*"}
 									autoComplete="new-password"
 								/>
@@ -68,14 +66,17 @@ const SignIn = () => {
 								</ErrorMessage>
 								<StyledTextField
 									name="password"
-									className={errors.password ? "invalid" : null}
+									className={errors.password || error ? "invalid" : null}
 									type="password"
 									placeholder={t("your-password") + "*"}
 									autoComplete="new-password"
 								/>
 								<ErrorMessage>
-									{errors.password ? (
-										<span>{"*" + errors.password}</span>
+									{errors.password || error ? (
+										<>
+											{errors.password && <span>{"*" + errors.password}</span>}
+											{error && <span>{"*" + error.message}</span>}
+										</>
 									) : null}
 								</ErrorMessage>
 							</div>
