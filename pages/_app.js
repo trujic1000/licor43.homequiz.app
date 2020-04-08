@@ -1,44 +1,46 @@
-import React from "react";
-import ReactDom from "react-dom";
+import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import Head from "next/head";
-import App from "next/app";
+// import App from "next/app";
 import reset from "styled-reset";
 import { css, createGlobalStyle, ThemeProvider } from "styled-components";
 import { appWithTranslation } from "../i18n";
+import { loadUser } from "~/slices/auth";
 
 import { initializeStore } from "../store";
 
-class MyApp extends App {
-	static async getInitialProps({ Component, ctx }) {
-		return {
-			pageProps: {
-				// Call page-level getInitialProps
-				...(Component.getInitialProps
-					? await Component.getInitialProps(ctx)
-					: {}),
-			},
-		};
-	}
+const App = ({ Component, pageProps, store }) => {
+	useEffect(() => {
+		if (localStorage.token) {
+			store.dispatch(loadUser());
+		}
+	}, []);
+	return (
+		<ThemeProvider theme={theme}>
+			<Provider store={store}>
+				<Head>
+					<title>Todo App</title>
+				</Head>
+				<GlobalStyle />
+				<Component {...pageProps} />
+			</Provider>
+		</ThemeProvider>
+	);
+};
 
-	render() {
-		const { Component, pageProps, store } = this.props;
-		return (
-			<ThemeProvider theme={theme}>
-				<Provider store={store}>
-					<Head>
-						<title>Todo App</title>
-					</Head>
-					<GlobalStyle />
-					<Component {...pageProps} />
-				</Provider>
-			</ThemeProvider>
-		);
-	}
-}
+App.getInitialProps = async ({ Component, ctx }) => {
+	return {
+		pageProps: {
+			// Call page-level getInitialProps
+			...(Component.getInitialProps
+				? await Component.getInitialProps(ctx)
+				: {}),
+		},
+	};
+};
 
-export default withRedux(initializeStore)(appWithTranslation(MyApp));
+export default withRedux(initializeStore)(appWithTranslation(App));
 
 const theme = {
 	colors: {

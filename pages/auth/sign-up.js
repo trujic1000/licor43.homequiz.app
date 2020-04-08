@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { isMobileSafari } from "react-device-detect";
@@ -22,7 +23,9 @@ import bg from "~/assets/img/sign-up-bg.jpg";
 const SignUp = () => {
 	const { t } = useTranslation(["sign-up", "common"], { i18n });
 	const [isSafari, setIsSafari] = useState("no");
+	const language = useSelector((state) => state.language.current);
 	const dispatch = useDispatch();
+	const router = useRouter();
 	useEffect(() => {
 		if (isMobileSafari) {
 			setIsSafari("yes");
@@ -62,9 +65,13 @@ const SignUp = () => {
 						terms: Yup.boolean().oneOf([true], t("you-must-accept-tac")),
 					})}
 					onSubmit={(values, { setSubmitting }) => {
-						const data = { ...values, tac: values.terms, legit: values.terms };
-						dispatch(register(data));
-						setSubmitting(false);
+						const data = {
+							...values,
+							tac: values.terms,
+							legit: values.terms,
+							language,
+						};
+						dispatch(register({ data, router }));
 					}}
 					validateOnChange={false}
 					validateOnBlur={false}

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLanguage } from "~/slices/language";
 import Layout from "~/components/layout";
 import { withTranslation, i18n } from "../i18n";
@@ -16,6 +17,14 @@ import flagUk from "~/assets/img/flag-uk.png";
 
 const Index = () => {
 	const dispatch = useDispatch();
+	const router = useRouter();
+	const { isAuthenticated } = useSelector((state) => state.auth);
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			router.push("/rules");
+		}
+	}, [isAuthenticated]);
 	return (
 		<Layout title="Home" headerType="home">
 			<WelcomeLayout>

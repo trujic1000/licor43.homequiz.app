@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import * as Yup from "yup";
 import { isMobileSafari } from "react-device-detect";
 import styled, { css } from "styled-components";
@@ -16,6 +17,7 @@ const SignIn = () => {
 	const { t } = useTranslation(["sign-in", "common"], { i18n });
 	const [isSafari, setIsSafari] = useState("no");
 	const dispatch = useDispatch();
+	const router = useRouter();
 	useEffect(() => {
 		if (isMobileSafari) {
 			setIsSafari("yes");
@@ -43,8 +45,7 @@ const SignIn = () => {
 						password: Yup.string().required(t("password-is-required")),
 					})}
 					onSubmit={(values, { setSubmitting }) => {
-						dispatch(login(values));
-						setSubmitting(false);
+						dispatch(login({ data: values, router }));
 						// setTimeout(() => {
 						// 	alert(JSON.stringify(values, null, 2));
 						// 	setSubmitting(false);

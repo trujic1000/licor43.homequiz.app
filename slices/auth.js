@@ -10,15 +10,15 @@ let initialState = {
 
 export const register = createAsyncThunk(
 	"auth/register",
-	async (data, { rejectWithValue }) => {
+	async ({ data, router }, { rejectWithValue }) => {
 		try {
 			const response = await authAPI.register(data);
 			// Set token to local storage
 			localStorage.setItem("token", response.access_token);
 			localStorage.setItem("token_expiration", response.expires_at);
-
+			// Get currently logged in user
 			const user = await authAPI.loadUser();
-			// TODO: Router push to /rules
+			router.push("/rules");
 			return user;
 		} catch (error) {
 			return rejectWithValue(error.response);
@@ -28,16 +28,29 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
 	"auth/login",
-	async (data, { rejectWithValue }) => {
+	async ({ data, router }, { rejectWithValue }) => {
 		try {
 			const response = await authAPI.login(data);
 			// Set token to local storage
 			localStorage.setItem("token", response.access_token);
 			localStorage.setItem("token_expiration", response.expires_at);
-
+			// Get currently logged in user
 			const user = await authAPI.loadUser();
-			// TODO: Router push to /rules
+			router.push("/rules");
 			return user;
+		} catch (error) {
+			return rejectWithValue(error.response);
+		}
+	}
+);
+
+export const loadUser = createAsyncThunk(
+	"auth/loadUser",
+	async (undefined, { rejectWithValue, dispatch }) => {
+		try {
+			const response = await authAPI.loadUser();
+			dispatch(setCurrentUser(response));
+			router.push("/rules");
 		} catch (error) {
 			return rejectWithValue(error.response);
 		}
