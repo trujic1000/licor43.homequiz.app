@@ -24,8 +24,10 @@ const SignUp = () => {
 	const { t } = useTranslation(["sign-up", "common"], { i18n });
 	const [isSafari, setIsSafari] = useState("no");
 	const language = useSelector((state) => state.language.current);
+	const { loading, error } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	const router = useRouter();
+	const isSubmitting = loading === "pending";
 	useEffect(() => {
 		if (isMobileSafari) {
 			setIsSafari("yes");
@@ -64,7 +66,7 @@ const SignUp = () => {
 						),
 						terms: Yup.boolean().oneOf([true], t("you-must-accept-tac")),
 					})}
-					onSubmit={(values, { setSubmitting }) => {
+					onSubmit={(values) => {
 						const data = {
 							...values,
 							tac: values.terms,
@@ -76,7 +78,7 @@ const SignUp = () => {
 					validateOnChange={false}
 					validateOnBlur={false}
 				>
-					{({ errors, touched, isSubmitting }) => (
+					{({ errors }) => (
 						<Form>
 							<TextField
 								name="name"
@@ -85,18 +87,21 @@ const SignUp = () => {
 								autoComplete="new-password"
 							/>
 							<ErrorMessage>
-								{errors.name && touched.name ? (
-									<span>{"*" + errors.name}</span>
-								) : null}
+								{errors.name ? <span>{"*" + errors.name}</span> : null}
 							</ErrorMessage>
 							<TextField
 								name="email"
-								className={errors.email ? "invalid" : null}
+								className={errors.emai || error ? "invalid" : null}
 								placeholder={t("your-email") + "*"}
 								autoComplete="new-password"
 							/>
 							<ErrorMessage>
-								{errors.email ? <span>{"*" + errors.email}</span> : null}
+								{errors.email || error ? (
+									<>
+										{errors.email && <span>{"*" + errors.email}</span>}
+										{error && <span>{"*" + error.message}</span>}
+									</>
+								) : null}
 							</ErrorMessage>
 							<TextField
 								name="password"

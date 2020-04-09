@@ -137,7 +137,7 @@ const auth = createSlice({
 			if (state.loading === "pending") {
 				state.loading = "idle";
 				state.error = {
-					message: "Authentication failed",
+					message: "This email has already been taken",
 				};
 			}
 		},

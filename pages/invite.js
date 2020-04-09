@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
@@ -7,6 +8,8 @@ import Link, { StyledLink } from "~/components/link";
 
 const Invite = () => {
 	const { t } = useTranslation("invite", { i18n });
+	const dispatch = useDispatch();
+	const code = useSelector((state) => state.quiz.code);
 	return (
 		<Layout title="Terms and Conditions" headerType="quiz-no-menu">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
@@ -16,10 +19,10 @@ const Invite = () => {
 				</Heading>
 				<CodeWrapper>
 					<div className="quiz-share__code">
-						<span className="quiz-share__code-number">1</span>
-						<span className="quiz-share__code-number">2</span>
-						<span className="quiz-share__code-number">3</span>
-						<span className="quiz-share__code-number">4</span>
+						<span className="quiz-share__code-number">{code[0]}</span>
+						<span className="quiz-share__code-number">{code[1]}</span>
+						<span className="quiz-share__code-number">{code[2]}</span>
+						<span className="quiz-share__code-number">{code[3]}</span>
 					</div>
 					<div className="quiz-share__text">
 						<span>{t("ask-your-friends-to-visit")}</span>

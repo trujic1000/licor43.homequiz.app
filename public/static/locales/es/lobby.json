@@ -1,5 +1,6 @@
 {
 	"lobby": "Lobby",
 	"waiting-for-the-game-to-start": "Esperando a que comience el juego ...",
-	"waiting-for-other-players-to-vote": "Esperando a que otros jugadores voten ..."
+	"waiting-for-other-players-to-vote": "Esperando a que otros jugadores voten ...",
+	"waiting-for-the-host-to-choose-a-new-category": "Esperando a que el anfitrión elija una nueva categoría ..."
 }

@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
 import ReactCodeInput from "react-code-input";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
 import { StyledLink } from "~/components/link";
+import Icon from "~/components/icon";
+import { joinQuiz } from "~/slices/quiz";
 
 const Join = () => {
 	const [code, setCode] = useState("");
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const { t } = useTranslation(["guest-welcome", "common"], {
 		i18n,
 	});
+
+	const loading = useSelector((state) => state.quiz.loading);
+	const isSubmitting = loading === "pending";
 	return (
 		<Layout title="Guest Join" headerType="welcome">
 			<Wrapper style={{ height: "calc(100rvh - 236px)" }}>
@@ -30,11 +37,20 @@ const Join = () => {
 				<StyledLink
 					as="button"
 					type="submit"
+					disabled={isSubmitting}
 					onClick={() => {
-						router.push("/guest-welcome");
+						const data = {
+							name: "",
+							code,
+						};
+						dispatch(joinQuiz({ data, router }));
 					}}
 				>
-					<span>{t("common:join-the-game")}</span>
+					{isSubmitting ? (
+						<Icon name="spinner" size="14" />
+					) : (
+						<span>{t("common:join-the-game")}</span>
+					)}
 				</StyledLink>
 			</Wrapper>
 		</Layout>

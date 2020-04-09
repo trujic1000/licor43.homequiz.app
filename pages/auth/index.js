@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useTranslation, i18n } from "~/i18n";
@@ -17,7 +17,6 @@ import wc4 from "~/assets/img/wc-4.png";
 const Auth = () => {
 	const { t } = useTranslation(["auth", "common"], { i18n });
 	const router = useRouter();
-	const dispatch = useDispatch();
 	const language = useSelector((state) => state.language.current);
 
 	const responseFacebook = (response) => {
@@ -39,9 +38,7 @@ const Auth = () => {
 				<div className="item item--4" />
 			</WelcomeLayout>
 			<ButtonWrap>
-				<Link href="/auth/sign-up" onClick={() => console.log("Sign Up")}>
-					{t("common:sign-up")}
-				</Link>
+				<Link href="/auth/sign-up">{t("common:sign-up")}</Link>
 				<FacebookLogin
 					appId="2809198462450733"
 					disableMobileRedirect={true}
@@ -57,11 +54,7 @@ const Auth = () => {
 						</StyledLink>
 					)}
 				/>
-				<Link
-					href="/auth/sign-in"
-					variant="invert"
-					onClick={() => console.log("Sign In")}
-				>
+				<Link href="/auth/sign-in" variant="invert">
 					{t("common:sign-in")}
 				</Link>
 			</ButtonWrap>

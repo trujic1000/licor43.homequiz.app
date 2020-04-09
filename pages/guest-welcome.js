@@ -1,10 +1,12 @@
 import React from "react";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { connectSocket, generateRandomId } from "~/utils";
 import {
 	Wrap100vh,
 	Heading,
@@ -15,12 +17,17 @@ import {
 import Layout from "~/components/layout";
 import Icon from "~/components/icon";
 import { StyledLink } from "~/components/link";
+import { setPlayer } from "~/slices/player";
 
 const GuestWelcome = () => {
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const { t } = useTranslation(["guest-welcome", "sign-up", "common"], {
 		i18n,
 	});
+
+	const { loading, code } = useSelector((state) => state.quiz);
+	const isSubmitting = loading === "pending";
 	return (
 		<Layout title="Guest Welcome" headerType="welcome">
 			<Wrapper style={{ height: "calc(100rvh - 236px)" }}>
@@ -42,17 +49,25 @@ const GuestWelcome = () => {
 							t("sign-up:you-must-accept-tac")
 						),
 					})}
-					onSubmit={(values, { setSubmitting }) => {
-						setTimeout(() => {
-							alert(JSON.stringify(values, null, 2));
-							setSubmitting(false);
-							router.push("/guest-rules");
-						}, 1000);
+					onSubmit={(values) => {
+						const player = {
+							id: "",
+							role: "GUEST",
+							name: values.name,
+						};
+						dispatch(setPlayer(player));
+						connectSocket({
+							code,
+							name: values.name,
+							router,
+							dispatch,
+						});
+						router.push("/guest-rules");
 					}}
 					validateOnChange={false}
 					validateOnBlur={false}
 				>
-					{({ errors, touched, isSubmitting }) => (
+					{({ errors }) => (
 						<StyledForm>
 							<div>
 								<TextField
@@ -62,9 +77,7 @@ const GuestWelcome = () => {
 									autoComplete="new-password"
 								/>
 								<ErrorMessage style={{ marginBottom: 5 }}>
-									{errors.name && touched.name ? (
-										<span>{"*" + errors.name}</span>
-									) : null}
+									{errors.name ? <span>{"*" + errors.name}</span> : null}
 								</ErrorMessage>
 								<Checkbox name="terms" style={{ top: -3 }}>
 									{t("sign-up:terms")}{" "}

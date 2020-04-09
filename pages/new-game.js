@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { createQuiz } from "~/slices/quiz";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useTranslation, i18n } from "~/i18n";
@@ -17,6 +19,10 @@ import { StyledLink } from "~/components/link";
 const NewGame = () => {
 	const { t } = useTranslation("new-game", { i18n });
 	const router = useRouter();
+	const dispatch = useDispatch();
+	const { loading } = useSelector((state) => state.quiz);
+
+	const isSubmitting = loading === "pending";
 	return (
 		<Layout title="New Game" headerType="quiz-no-menu">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
@@ -27,17 +33,16 @@ const NewGame = () => {
 					validationSchema={Yup.object({
 						quizName: Yup.string().required(t("quiz-name-is-required")),
 					})}
-					onSubmit={(values, { setSubmitting }) => {
-						// setTimeout(() => {
-						// 	alert(JSON.stringify(values, null, 2));
-						// 	setSubmitting(false);
-						// }, 1000);
-						router.push("/invite");
+					onSubmit={(values) => {
+						const data = {
+							name: values.quizName,
+						};
+						dispatch(createQuiz({ data, router }));
 					}}
 					validateOnChange={false}
 					validateOnBlur={false}
 				>
-					{({ errors, touched, isSubmitting }) => (
+					{({ errors }) => (
 						<StyledForm>
 							<Heading>
 								{t("lets-set-up")}
@@ -51,7 +56,7 @@ const NewGame = () => {
 									autoComplete="new-password"
 								/>
 								<ErrorMessage>
-									{errors.quizName && touched.quizName ? (
+									{errors.quizName ? (
 										<span>{"*" + errors.quizName}</span>
 									) : null}
 								</ErrorMessage>
