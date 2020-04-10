@@ -60,6 +60,7 @@ const GuestWelcome = () => {
 							code,
 							name: values.name,
 							router,
+							role: player.role,
 							dispatch,
 						});
 						router.push("/guest-rules");

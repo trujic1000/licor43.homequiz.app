@@ -33,6 +33,7 @@ const Join = () => {
 					forceUppercase
 					value={code}
 					onChange={(code) => setCode(code)}
+					autoFocus
 				/>
 				<StyledLink
 					as="button"

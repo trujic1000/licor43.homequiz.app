@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import Head from "next/head";
-// import App from "next/app";
 import reset from "styled-reset";
+import "react-toastify/dist/ReactToastify.css";
 import { css, createGlobalStyle, ThemeProvider } from "styled-components";
 import { appWithTranslation } from "../i18n";
 import { loadUser } from "~/slices/auth";
@@ -105,26 +105,28 @@ const GlobalStyle = createGlobalStyle`
 	html {
 		box-sizing: border-box;
 	}
-
 	*,
 	*::before,
 	*::after {
  		box-sizing: inherit;
 	}
-
 	html, body {
 		height: 100%;
 		background-color: ${(props) => props.theme.colors.secondary};
 		color: ${(props) => props.theme.colors.primary};
 	}
-
 	body {
 		padding-top: 5px;
 		line-height: 1.5;
 		font-family: "Hurme Geometric", sans-serif;
 	}
-
 	a {
 		text-decoration: none;
+	}
+	.Toastify__toast--warning {
+  background: ${(props) => props.theme.colors.primary} !important;
+	}
+	.Toastify__close-button {
+		color: #000 !important;
 	}
 `;

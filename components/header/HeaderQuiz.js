@@ -1,9 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import Menu from "./Menu";
 import HeaderBgSmall from "~/assets/img/header-bg-small.png";
 
 const Header = () => {

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
 import Menu from "~/components/header/Menu";
+import { ToastContainer } from "react-toastify";
 
 import { Header, HeaderQuiz, HeaderHome } from "../header";
 
@@ -16,9 +17,15 @@ const Layout = ({ title, headerType, children }) => {
 				{headerType === "home" && <HeaderHome />}
 				{headerType === "welcome" && <Header size="big" />}
 				{headerType === "auth" && <Header />}
-				{headerType === "quiz-no-menu" && <HeaderQuiz />}
+				{headerType === "quiz-no-menu" && (
+					<>
+						<ToastContainer hideProgressBar style={{ color: "#000" }} />
+						<HeaderQuiz />
+					</>
+				)}
 				{headerType === "quiz" && (
 					<>
+						<ToastContainer hideProgressBar style={{ color: "#000" }} />
 						<Menu />
 						<HeaderQuiz />
 					</>

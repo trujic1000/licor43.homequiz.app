@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import quizAPI from "~/api/quizAPI";
-import { connectSocket, generateRandomId } from "~/utils";
+import { connectSocket } from "~/utils";
 import { setPlayer } from "./player";
 
 export const status = {
@@ -44,6 +45,7 @@ export const createQuiz = createAsyncThunk(
 				code: response.code,
 				name: response.user.name,
 				router,
+				role: player.role,
 				dispatch,
 			});
 			router.push("/invite");
@@ -74,15 +76,44 @@ export const joinQuiz = createAsyncThunk(
 	}
 );
 
+export const getQuestion = createAsyncThunk(
+	"quiz/getQuestion",
+	async ({ data, router }, { rejectWithValue }) => {
+		try {
+			const response = await quizAPI.getQuestion(data);
+			if (!response.questions) {
+				toast(`No more questions in that category`, {
+					type: toast.TYPE.ERROR,
+				});
+			} else {
+				router.push("/question");
+			}
+		} catch (error) {
+			return rejectWithValue(error.response);
+		}
+	}
+);
+
 const quiz = createSlice({
 	name: "quiz",
 	initialState,
 	reducers: {
 		addPlayer: (state, action) => {
 			state.players.push(action.payload);
+			state.numberOfPlayers++;
+		},
+		removePlayer: (state, action) => {
+			const index = state.players.findIndex(
+				(player) => player.id === action.payload
+			);
+			state.players.splice(index, 1);
+			state.numberOfPlayers--;
 		},
 		setCategoryId: (state, action) => {
 			state.categoryId = action.payload;
+		},
+		setQuestion: (state, action) => {
+			state.question = action.payload;
 		},
 		nextQuestion: (state) => {
 			state.lobbyText = "waiting-for-the-host-to-choose-a-new-category";
@@ -141,7 +172,9 @@ const quiz = createSlice({
 
 export const {
 	addPlayer,
+	removePlayer,
 	setCategoryId,
+	setQuestion,
 	nextQuestion,
 	setConnectionStatus,
 } = quiz.actions;

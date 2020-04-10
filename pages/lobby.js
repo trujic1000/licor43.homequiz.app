@@ -1,16 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
 
 const Lobby = () => {
 	const { t } = useTranslation("lobby", { i18n });
+	const { lobbyText } = useSelector((state) => state.quiz);
 	return (
 		<Layout title="Lobby" headerType="quiz-no-menu">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>{t("lobby")}</Heading>
-				<span>{t("waiting-for-the-game-to-start")}</span>
+				<span>{t(lobbyText)}</span>
 			</Wrapper>
 		</Layout>
 	);

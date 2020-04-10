@@ -1,14 +1,18 @@
 import React from "react";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
 import Icon from "~/components/icon";
-import { StyledLink } from "~/components/link";
-
+import { setCategoryId, getQuestion } from "~/slices/quiz";
 const Category = () => {
 	const { t } = useTranslation("category", { i18n });
+	const router = useRouter();
+	const dispatch = useDispatch();
+
+	const quiz_id = useSelector((state) => state.quiz.id);
 	return (
 		<Layout title="Category" headerType="quiz">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
@@ -17,54 +21,82 @@ const Category = () => {
 					<span>{t("a-category")}</span>
 				</Heading>
 				<CategoryWrap>
-					<Link href="/question">
-						<a>
-							<CategoryItem>
-								<div className="category-item__img">
-									<Icon name="quotes" />
-								</div>
-								<div className="category-item__text">
-									{t("how-would-you-call")}
-								</div>
-							</CategoryItem>
-						</a>
-					</Link>
-					<Link href="/question">
-						<a>
-							<CategoryItem>
-								<div className="category-item__img">
-									<Icon name="eye" />
-								</div>
-								<div className="category-item__text">
-									{t("what-can-you-see")}
-								</div>
-							</CategoryItem>
-						</a>
-					</Link>
-					<Link href="/question">
-						<a>
-							<CategoryItem>
-								<div className="category-item__img">
-									<Icon name="ear" />
-								</div>
-								<div className="category-item__text">
-									{t("what-is-this-sound")}
-								</div>
-							</CategoryItem>
-						</a>
-					</Link>
-					<Link href="/question">
-						<a>
-							<CategoryItem>
-								<div className="category-item__img">
-									<Icon name="trig" />
-								</div>
-								<div className="category-item__text">
-									{t("what-is-it-made-of")}
-								</div>
-							</CategoryItem>
-						</a>
-					</Link>
+					<CategoryItem
+						onClick={() => {
+							dispatch(setCategoryId(1));
+							dispatch(
+								getQuestion({
+									data: {
+										quiz_id,
+										category: 1,
+									},
+									router,
+								})
+							);
+						}}
+					>
+						<div className="category-item__img">
+							<Icon name="quotes" />
+						</div>
+						<div className="category-item__text">{t("how-would-you-call")}</div>
+					</CategoryItem>
+					<CategoryItem
+						onClick={() => {
+							dispatch(setCategoryId(2));
+							dispatch(
+								getQuestion({
+									data: {
+										quiz_id,
+										category: 2,
+									},
+									router,
+								})
+							);
+						}}
+					>
+						<div className="category-item__img">
+							<Icon name="eye" />
+						</div>
+						<div className="category-item__text">{t("what-can-you-see")}</div>
+					</CategoryItem>
+					<CategoryItem
+						onClick={() => {
+							dispatch(setCategoryId(3));
+							dispatch(
+								getQuestion({
+									data: {
+										quiz_id,
+										category: 3,
+									},
+									router,
+								})
+							);
+						}}
+					>
+						<div className="category-item__img">
+							<Icon name="ear" />
+						</div>
+						<div className="category-item__text">{t("what-is-this-sound")}</div>
+					</CategoryItem>
+					<CategoryItem
+						onClick={() => {
+							dispatch(setCategoryId(4));
+							dispatch(
+								getQuestion({
+									data: {
+										quiz_id,
+										category: 4,
+									},
+									router,
+								})
+							);
+						}}
+					>
+						<div className="category-item__img">
+							<Icon name="trig" />
+						</div>
+						<div className="category-item__text">{t("what-is-it-made-of")}</div>
+					</CategoryItem>
 				</CategoryWrap>
 			</Wrapper>
 		</Layout>
@@ -90,7 +122,10 @@ const CategoryWrap = styled.div`
 	grid-gap: 15px;
 `;
 
-const CategoryItem = styled.div`
+const CategoryItem = styled.button`
+	background: transparent;
+	border: none;
+	outline: none;
 	.category-item__img {
 		background-color: ${(props) => props.theme.colors.primary};
 		width: 118px;

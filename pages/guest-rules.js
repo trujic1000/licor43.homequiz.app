@@ -22,7 +22,7 @@ const Rules = () => {
 				<span className="text-center">
 					{t("rules:make-sure-to-become-winner")}
 				</span>
-				<Link href="/new-game" style={{ margin: "20px auto" }}>
+				<Link href="/lobby" style={{ margin: "20px auto" }}>
 					{t("common:start-the-game")}
 				</Link>
 			</Wrapper>
