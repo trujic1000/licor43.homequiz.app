@@ -4,12 +4,13 @@ const withImages = require("next-images");
 const withOffline = require("next-offline");
 
 const nextConfig = {
-	webpack: config => {
+	webpack: (config) => {
 		config.resolve.alias["~"] = path.resolve(__dirname);
 		return config;
 	},
 	publicRuntimeConfig: {
-		BASE_URL: "https://admin.homequiz.app"
+		BASE_URL: "https://admin.homequiz.app",
+		STORAGE_URL: "https://admin.homequiz.app/storage",
 	},
 	workboxOpts: {
 		swDest: "static/service-worker.js",
@@ -20,26 +21,26 @@ const nextConfig = {
 				options: {
 					cacheName: "assets-cache",
 					cacheableResponse: {
-						statuses: [0, 200]
-					}
-				}
+						statuses: [0, 200],
+					},
+				},
 			},
 			{
 				urlPattern: /^https:\/\/code\.getmdl\.io.*/,
 				handler: "CacheFirst",
 				options: {
-					cacheName: "lib-cache"
-				}
+					cacheName: "lib-cache",
+				},
 			},
 			{
 				urlPattern: /^http.*/,
 				handler: "NetworkFirst",
 				options: {
-					cacheName: "http-cache"
-				}
-			}
-		]
-	}
+					cacheName: "http-cache",
+				},
+			},
+		],
+	},
 };
 
 module.exports = withPlugins([[withOffline], [withImages]], nextConfig);

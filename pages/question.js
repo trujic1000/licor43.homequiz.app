@@ -1,6 +1,7 @@
-import React from "react";
-import Link from "next/link";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import ReactPlayer from "react-player";
 import { useTranslation, i18n } from "~/i18n";
 import styled from "styled-components";
 import { Formik, Form } from "formik";
@@ -8,23 +9,61 @@ import { Wrap100vh, Heading, TextField } from "~/components/elements";
 import Layout from "~/components/layout";
 import Icon from "~/components/icon";
 import { StyledLink } from "~/components/link";
-import zebras from "~/assets/img/zebras.png";
+import { STORAGE_URL } from "~/utils";
 
 const Question = () => {
-	const router = useRouter();
 	const { t } = useTranslation(["question", "common"], { i18n });
+	const router = useRouter();
+	const dispatch = useDispatch();
+
+	const { categoryId, question } = useSelector((state) => state.quiz);
+	const player = useSelector((state) => state.player);
+	const [playing, setPlaying] = useState(false);
 	return (
 		<Layout title="Guest Welcome" headerType="quiz">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>
-					{t("how-would")}
-					<span>{t("you-call")}</span>
+					{categoryId === 1 && t("how-would")}
+					{categoryId === 2 && t("what-can")}
+					{categoryId === 3 && t("what-is")}
+					{categoryId === 4 && t("what-is-it")}
+					<span>
+						{categoryId === 1 && t("you-call")}
+						{categoryId === 2 && t("you-see")}
+						{categoryId === 3 && t("this-sound")}
+						{categoryId === 4 && t("made-of")}
+					</span>
 					<span className="question-mark">?</span>
 				</Heading>
-				<QuestionWrap>
-					<img src={zebras} alt="question" className="question-img" />
-					<span className="question-text">A group of Zebras</span>
-				</QuestionWrap>
+				{categoryId !== 3 ? (
+					<QuestionWrap id={categoryId}>
+						<img
+							src={`${STORAGE_URL}/questions/${question.image}`}
+							alt="question"
+							className="question-img"
+						/>
+						<span className="question-text">{question.description}</span>
+					</QuestionWrap>
+				) : (
+					<AudioQuestionWrap>
+						{!playing && <Icon name="play" onClick={() => setPlaying(true)} />}
+						{playing && <Icon name="pause" onClick={() => setPlaying(false)} />}
+						{playing && (
+							<ReactPlayer
+								url={`${STORAGE_URL}/${question.audio}`}
+								playing
+								config={{
+									file: {
+										forceAudio: true,
+									},
+								}}
+								width={0}
+								heigh={0}
+								onEnded={() => setPlaying(false)}
+							/>
+						)}
+					</AudioQuestionWrap>
+				)}
 				<Formik
 					initialValues={{
 						answer: "",
@@ -118,7 +157,7 @@ const QuestionWrap = styled.div`
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
+		background-color: ${(props) => props.id === 1 && `rgba(0, 0, 0, 0.8)`};
 	}
 	.question-img {
 		width: 100%;
@@ -133,6 +172,22 @@ const QuestionWrap = styled.div`
 		line-height: 1;
 		text-align: center;
 		font-size: 30px;
-		color: #f3e03a;
+		color: ${(props) => props.theme.colors.primary};
+	}
+`;
+
+const AudioQuestionWrap = styled.div`
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 200px;
+	height: 200px;
+	margin: 30px auto;
+	border-radius: 50%;
+	background-color: ${(props) => props.theme.colors.primary};
+
+	#play {
+		margin-left: 20px;
 	}
 `;

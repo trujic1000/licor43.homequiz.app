@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Icon = ({ name, size }) => {
+const Icon = ({ name, size, onClick }) => {
 	switch (name) {
 		case "logo":
 			return (
@@ -266,16 +266,58 @@ const Icon = ({ name, size }) => {
 					</text>
 				</svg>
 			);
+		case "pause":
+			return (
+				<svg
+					id="pause-solid"
+					onClick={onClick}
+					xmlns="http://www.w3.org/2000/svg"
+					width="60"
+					height="60"
+					viewBox="0 0 60 60"
+				>
+					<path
+						id="pause-solid-2"
+						data-name="pause-solid"
+						d="M19.286,91H6.429A6.43,6.43,0,0,1,0,84.571V37.429A6.43,6.43,0,0,1,6.429,31H19.286a6.43,6.43,0,0,1,6.429,6.429V84.571A6.43,6.43,0,0,1,19.286,91ZM60,84.571V37.429A6.43,6.43,0,0,0,53.571,31H40.714a6.43,6.43,0,0,0-6.429,6.429V84.571A6.43,6.43,0,0,0,40.714,91H53.571A6.43,6.43,0,0,0,60,84.571Z"
+						transform="translate(0 -31)"
+						fill="#1c1c1c"
+					/>
+				</svg>
+			);
+		case "play":
+			return (
+				<svg
+					id="play"
+					onClick={onClick}
+					xmlns="http://www.w3.org/2000/svg"
+					width="60"
+					height="80"
+					viewBox="0 0 60 80"
+				>
+					<g id="Group_123" data-name="Group 123">
+						<path
+							id="Path_227"
+							data-name="Path 227"
+							d="M117.1,32.528,72.722,2.147A10.833,10.833,0,0,0,66.891,0C63.573,0,61.52,2.663,61.52,7.121V72.782c0,4.453,2.05,7.111,5.361,7.111a10.743,10.743,0,0,0,5.8-2.152l44.4-30.38c2.855-1.957,4.436-4.59,4.436-7.418S119.958,34.484,117.1,32.528Z"
+							transform="translate(-61.52)"
+							fill="#1c1c1c"
+						/>
+					</g>
+				</svg>
+			);
 	}
 };
 
 Icon.propTypes = {
 	name: PropTypes.string.isRequired,
 	size: PropTypes.string,
+	onClick: PropTypes.func,
 };
 
 Icon.defaultProps = {
 	size: "60",
+	onClick: () => {},
 };
 
 export default Icon;

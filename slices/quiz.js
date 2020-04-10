@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import quizAPI from "~/api/quizAPI";
 import { connectSocket } from "~/utils";
 import { setPlayer } from "./player";
+import { setLanguage } from "./language";
 
 export const status = {
 	CONNECTED: "CONNECTED",
@@ -62,9 +63,10 @@ export const createQuiz = createAsyncThunk(
 
 export const joinQuiz = createAsyncThunk(
 	"quiz/join",
-	async ({ data, router }, { rejectWithValue }) => {
+	async ({ data, router }, { rejectWithValue, dispatch }) => {
 		try {
 			const response = await quizAPI.joinQuiz(data);
+			dispatch(setLanguage(response.quiz_language));
 			router.push("/guest-welcome");
 			return {
 				name: response.quiz_name,
