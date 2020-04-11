@@ -9,6 +9,7 @@ import { Wrap100vh, Heading, TextField } from "~/components/elements";
 import Layout from "~/components/layout";
 import Icon from "~/components/icon";
 import { StyledLink } from "~/components/link";
+import { answerQuestion } from "~/slices/quiz";
 import { STORAGE_URL } from "~/utils";
 
 const Question = () => {
@@ -16,9 +17,10 @@ const Question = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const { categoryId, question } = useSelector((state) => state.quiz);
+	const { categoryId, question, loading } = useSelector((state) => state.quiz);
 	const player = useSelector((state) => state.player);
 	const [playing, setPlaying] = useState(false);
+	const isSubmitting = loading === "pending";
 	return (
 		<Layout title="Guest Welcome" headerType="quiz">
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
@@ -68,30 +70,33 @@ const Question = () => {
 					initialValues={{
 						answer: "",
 					}}
-					onSubmit={(values, { setSubmitting }) => {
-						setTimeout(() => {
-							alert(JSON.stringify(values, null, 2));
-							setSubmitting(false);
-							router.push("/guest-rules");
-						}, 1000);
+					onSubmit={(values) => {
+						dispatch(
+							answerQuestion({
+								data: {
+									socket_id: player.id,
+									question_id: question.id,
+									answer: values.answer,
+								},
+								router,
+							})
+						);
 					}}
 				>
-					{({ isSubmitting }) => (
-						<StyledForm>
-							<TextField
-								name="answer"
-								placeholder={"Your Answer"}
-								autoComplete="new-password"
-							/>
-							<StyledLink as="button" type="submit" disabled={isSubmitting}>
-								{isSubmitting ? (
-									<Icon name="spinner" size="14" />
-								) : (
-									<span>{t("common:submit-your-answer")}</span>
-								)}
-							</StyledLink>
-						</StyledForm>
-					)}
+					<StyledForm>
+						<TextField
+							name="answer"
+							placeholder={"Your Answer"}
+							autoComplete="new-password"
+						/>
+						<StyledLink as="button" type="submit" disabled={isSubmitting}>
+							{isSubmitting ? (
+								<Icon name="spinner" size="14" />
+							) : (
+								<span>{t("common:submit-your-answer")}</span>
+							)}
+						</StyledLink>
+					</StyledForm>
 				</Formik>
 			</Wrapper>
 		</Layout>

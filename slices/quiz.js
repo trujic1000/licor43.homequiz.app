@@ -96,6 +96,27 @@ export const getQuestion = createAsyncThunk(
 	}
 );
 
+export const answerQuestion = createAsyncThunk(
+	"quiz/answerQuestion",
+	async ({ data, router }, { rejectWithValue }) => {
+		try {
+			const response = await quizAPI.answerQuestion(data);
+			if (response.left === 0) {
+				router.push("/vote");
+			} else {
+				router.push("/lobby");
+			}
+			return {
+				remainingVotes: response.left,
+				lobbyText: "waiting-for-other-players-to-vote",
+				answer: data.answer,
+			};
+		} catch (error) {
+			return rejectWithValue(error.response);
+		}
+	}
+);
+
 const quiz = createSlice({
 	name: "quiz",
 	initialState,
@@ -166,6 +187,28 @@ const quiz = createSlice({
 				state.loading = "idle";
 				state.error = {
 					message: "Failed to join the quiz",
+				};
+			}
+		},
+		[answerQuestion.pending]: (state, action) => {
+			if (state.loading === "idle") {
+				state.loading = "pending";
+				state.error = null;
+			}
+		},
+		[answerQuestion.fulfilled]: (state, { payload }) => {
+			if (state.loading === "pending") {
+				state.loading = "idle";
+				state.remainingVotes = payload.remainingVotes;
+				state.lobbyText = payload.lobbyText;
+				state.answer = payload.answer;
+			}
+		},
+		[answerQuestion.rejected]: (state, action) => {
+			if (state.loading === "pending") {
+				state.loading = "idle";
+				state.error = {
+					message: "Failed to answer the question",
 				};
 			}
 		},
