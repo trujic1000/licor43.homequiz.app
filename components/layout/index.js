@@ -5,10 +5,9 @@ import { ToastContainer } from "react-toastify";
 import Menu from "~/components/header/Menu";
 import { Header, HeaderQuiz, HeaderHome } from "../header";
 import { initGA, logPageView } from "~/utils/analytics";
-import { useEffect } from "react";
 
-// TODO: Add Google Analytics
 const Layout = ({ title, headerType, children }) => {
+	// Google analytics
 	useEffect(() => {
 		if (!window.GA_INITIALIZED) {
 			initGA();
