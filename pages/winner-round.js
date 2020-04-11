@@ -22,7 +22,7 @@ const headings = [
 const WinnerRound = () => {
 	const { t } = useTranslation("winner-round", { i18n });
 	const dispatch = useDispatch();
-	const { roundWinner } = useSelector((state) => state.quiz);
+	const { roundWinner, winner } = useSelector((state) => state.quiz);
 	const { role, id } = useSelector((state) => state.player);
 
 	const { isAuthenticated } = useSelector((state) => state.auth);
@@ -60,8 +60,8 @@ const WinnerRound = () => {
 					<Icon name="logo-alt" size="35" />
 					{isWinner ? (
 						<>
-							<span className="text">You are</span>
-							<span className="text text-white">the winner</span>
+							<span className="text">{t("you-are")}</span>
+							<span className="text text-white">{t("the-winner")}</span>
 						</>
 					) : (
 						<span className={`text ${isWhite ? "text-white" : null}`}>
@@ -69,17 +69,31 @@ const WinnerRound = () => {
 						</span>
 					)}
 				</RoundBlock>
-				<ButtonWrap>
-					<Link
-						href={role === "HOST" ? "/category" : "/lobby"}
-						onClick={() => dispatch(nextQuestion())}
-					>
-						{t("take-the-next-question")}
-					</Link>
-					<Link href="/ranking" variant="invert">
-						{t("check-on-ranking")}
-					</Link>
-				</ButtonWrap>
+				{winner ? (
+					<ButtonWrap>
+						<Link
+							href={role === "HOST" ? "/new-game" : "/guest-join"}
+							onClick={() => dispatch(nextQuestion())}
+						>
+							{t("start-a-new-game")}
+						</Link>
+						<Link href="/ranking" variant="invert">
+							{t("check-on-ranking")}
+						</Link>
+					</ButtonWrap>
+				) : (
+					<ButtonWrap>
+						<Link
+							href={role === "HOST" ? "/category" : "/lobby"}
+							onClick={() => dispatch(nextQuestion())}
+						>
+							{t("take-the-next-question")}
+						</Link>
+						<Link href="/ranking" variant="invert">
+							{t("check-on-ranking")}
+						</Link>
+					</ButtonWrap>
+				)}
 			</Wrapper>
 		</Layout>
 	);
@@ -91,11 +105,11 @@ WinnerRound.getInitialProps = async () => ({
 
 export default WinnerRound;
 
-const Wrapper = styled(Wrap100vh)`
+export const Wrapper = styled(Wrap100vh)`
 	padding: 0 30px;
 `;
 
-const RoundBlock = styled.div`
+export const RoundBlock = styled.div`
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -128,7 +142,7 @@ const RoundBlock = styled.div`
 	}
 `;
 
-const ButtonWrap = styled.div`
+export const ButtonWrap = styled.div`
 	display: grid;
 	margin-bottom: 10px;
 	button {

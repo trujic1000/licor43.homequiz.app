@@ -19,6 +19,7 @@ const Question = () => {
 
 	const { categoryId, question, loading } = useSelector((state) => state.quiz);
 	const { isAuthenticated } = useSelector((state) => state.auth);
+	const language = useSelector((state) => state.language.current);
 	const player = useSelector((state) => state.player);
 	const [playing, setPlaying] = useState(false);
 	const isSubmitting = loading === "pending";
@@ -48,7 +49,13 @@ const Question = () => {
 							alt="question"
 							className="question-img"
 						/>
-						<span className="question-text">{question.description}</span>
+						<span className="question-text">
+							{language === "spanish" ? (
+								<span>{question.description_spanish}</span>
+							) : (
+								<span>{question.description}</span>
+							)}
+						</span>
 					</QuestionWrap>
 				) : (
 					<AudioQuestionWrap>

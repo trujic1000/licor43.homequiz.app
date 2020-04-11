@@ -24,7 +24,7 @@ let initialState = {
 	numberOfPlayers: 0,
 	remainingRounds: 15,
 	roundWinner: {},
-	winner: {},
+	winner: null,
 	ranking: [],
 	loading: "idle",
 	error: null,
@@ -163,6 +163,9 @@ const quiz = createSlice({
 			state.roundWinner = payload.roundWinner;
 			state.remainingRounds = payload.remainingRounds;
 		},
+		setWinner: (state, { payload }) => {
+			state.winner = payload;
+		},
 		nextQuestion: (state) => {
 			state.lobbyText = "waiting-for-the-host-to-choose-a-new-category";
 		},
@@ -267,6 +270,7 @@ export const {
 	setQuestion,
 	setAnswers,
 	roundEnded,
+	setWinner,
 	nextQuestion,
 	setConnectionStatus,
 } = quiz.actions;

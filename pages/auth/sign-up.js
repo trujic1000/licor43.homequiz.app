@@ -91,7 +91,7 @@ const SignUp = () => {
 							</ErrorMessage>
 							<TextField
 								name="email"
-								className={errors.emai || error ? "invalid" : null}
+								className={errors.email || error ? "invalid" : null}
 								placeholder={t("your-email") + "*"}
 								autoComplete="new-password"
 							/>

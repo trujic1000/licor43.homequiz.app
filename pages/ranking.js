@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
-import Icon from "~/components/icon";
 import Link from "~/components/link";
 import { nextQuestion } from "~/slices/quiz";
 
@@ -24,7 +23,11 @@ const Ranking = () => {
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>
 					<span className="text-white" style={{ fontSize: 36 }}>
-						{t("current-ranking")}
+						{winner ? (
+							<span>{t("final-ranking")}</span>
+						) : (
+							<span>{t("current-ranking")}</span>
+						)}
 					</span>
 				</Heading>
 				<RankingWrap>
@@ -35,8 +38,9 @@ const Ranking = () => {
 						</div>
 					))}
 				</RankingWrap>
-				{Object.keys(winner).length > 0 ? (
-					<Link href="/claim-price">{t("share-with-your-friends")}</Link>
+				{winner ? (
+					// TODO: What happens here?
+					<Link href="#">{t("share-with-your-friends")}</Link>
 				) : (
 					<Link
 						href={role === "HOST" ? "/category" : "/lobby"}

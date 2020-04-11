@@ -90,7 +90,11 @@ export const Checkbox = ({ style, children, ...props }) => {
 		<>
 			<CheckboxWrap>
 				<input type="checkbox" {...field} {...props} />
-				<span role="checkbox" className="checkbox" style={style} />
+				<span
+					role="checkbox"
+					className="checkbox"
+					style={{ ...style, borderColor: meta.error ? "#ff424c" : "initial" }}
+				/>
 				{children}
 			</CheckboxWrap>
 			<ErrorMessage style={{ textIndent: 35 }}>

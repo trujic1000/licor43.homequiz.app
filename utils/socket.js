@@ -12,6 +12,7 @@ import {
 	setQuestion,
 	setAnswers,
 	roundEnded,
+	setWinner,
 } from "~/slices/quiz";
 import { setId } from "~/slices/player";
 
@@ -93,14 +94,11 @@ export const connectSocket = ({ code, name, role, router, dispatch }) => {
 		})
 		.listen("QuizEndedEvent", (data) => {
 			console.log("QuizEndedEvent: " + JSON.stringify(data, undefined, 2));
-			// if (quiz.username === data.winner.name) {
-			//   console.log(
-			//     'redirecting to winner quiz',
-			//     quiz.username === data.winner.name
-			//   );
-			//   router.push('/quiz/winner-quiz');
-			// } else {
-			//   router.push('/quiz/ranking');
-			// }
+			dispatch(setWinner(data.winner));
+			if (name === data.winner.name) {
+				router.push("/winner-quiz");
+			} else {
+				router.push("/ranking");
+			}
 		});
 };
