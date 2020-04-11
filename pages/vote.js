@@ -1,40 +1,31 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
 import { StyledLink } from "~/components/link";
-
-const answers = [
-	{
-		id: 0,
-		answer: "Zebrathousand",
-	},
-	{
-		id: 1,
-		answer: "A Maze",
-	},
-	{
-		id: 2,
-		answer: "Shit Tons Of Zebras",
-	},
-	{
-		id: 3,
-		answer: "Zebrazzzz",
-	},
-];
+import { vote } from "~/slices/quiz";
 
 const Vote = () => {
-	const [voteId, setVoteId] = useState(null);
 	const { t } = useTranslation("vote", { i18n });
+	const dispatch = useDispatch();
+	const router = useRouter();
+
+	const { isAuthenticated } = useSelector((state) => state.auth);
+	const { answers, question } = useSelector((state) => state.quiz);
+	const [voteId, setVoteId] = useState(null);
 	return (
-		<Layout title="Guest Welcome" headerType="quiz">
+		<Layout
+			title="Guest Welcome"
+			headerType={isAuthenticated ? "quiz" : "quiz-no-menu"}
+		>
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>
 					{t("vote-for")}
 					<span>{t("your-favorite")}</span>
-					<span className="text-uppercase">A group of zebras</span>
+					<span className="text-uppercase">{question.description}</span>
 				</Heading>
 				<VoteWrap>
 					{answers.map(({ id, answer }) => (
@@ -53,9 +44,18 @@ const Vote = () => {
 				<StyledLink
 					as="button"
 					type="submit"
-					onClick={() => console.log(voteId)}
+					onClick={() =>
+						dispatch(
+							vote({
+								data: {
+									answer_id: voteId,
+								},
+								router,
+							})
+						)
+					}
 				>
-					Vote
+					{t("vote")}
 				</StyledLink>
 			</Wrapper>
 		</Layout>

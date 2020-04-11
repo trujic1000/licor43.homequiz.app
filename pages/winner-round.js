@@ -1,56 +1,83 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
 import Icon from "~/components/icon";
 import Link from "~/components/link";
+import { nextQuestion } from "~/slices/quiz";
 
 const headings = [
 	{
-		top: "The most",
-		bottom: "creative answer",
+		top: "the-most",
+		bottom: "creative-answer",
 	},
 	{
-		top: "And the",
-		bottom: "winner is",
+		top: "and-the",
+		bottom: "winner-is",
 	},
 ];
 
-const winner = {
-	answer: "A Maze",
-	name: "William",
-};
-
 const WinnerRound = () => {
 	const { t } = useTranslation("winner-round", { i18n });
+	const dispatch = useDispatch();
+	const { roundWinner } = useSelector((state) => state.quiz);
+	const { role, id } = useSelector((state) => state.player);
+
+	const { isAuthenticated } = useSelector((state) => state.auth);
 	const [heading, setHeading] = useState(headings[0]);
-	const [text, setText] = useState(winner.answer);
+	const [text, setText] = useState(roundWinner.answer);
 	const [isWhite, toggleWhite] = useState(false);
+
+	const isWinner = roundWinner.socket_id === id;
+
+	// Update text after 2.5 sec
 	useEffect(() => {
-		setTimeout(() => {
+		const t = setTimeout(() => {
 			setHeading(headings[1]);
-			setText(winner.name);
+			setText(roundWinner.name);
 			toggleWhite((prevState) => !prevState);
-		}, 2000);
+		}, 2500);
+		return () => {
+			clearTimeout(t);
+		};
 	}, []);
+
 	return (
-		<Layout title="Round Winner" headerType="quiz">
+		<Layout
+			title="Round Winner"
+			headerType={isAuthenticated ? "quiz" : "quiz-no-menu"}
+		>
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
-				<Heading>
-					{heading.top}
-					<span>{heading.bottom}</span>
-				</Heading>
-				<RoundBlock>
+				{!isWinner && (
+					<Heading>
+						{t(heading.top)}
+						<span>{t(heading.bottom)}</span>
+					</Heading>
+				)}
+				<RoundBlock style={isWinner ? { marginTop: 60 } : {}}>
 					<Icon name="logo-alt" size="35" />
-					<span className={`text ${isWhite ? "text-white" : null}`}>
-						{text}
-					</span>
+					{isWinner ? (
+						<>
+							<span className="text">You are</span>
+							<span className="text text-white">the winner</span>
+						</>
+					) : (
+						<span className={`text ${isWhite ? "text-white" : null}`}>
+							{text}
+						</span>
+					)}
 				</RoundBlock>
 				<ButtonWrap>
-					<Link href="/lobby">Take the next question</Link>
+					<Link
+						href={role === "HOST" ? "/category" : "/lobby"}
+						onClick={() => dispatch(nextQuestion())}
+					>
+						{t("take-the-next-question")}
+					</Link>
 					<Link href="/ranking" variant="invert">
-						Check on Ranking
+						{t("check-on-ranking")}
 					</Link>
 				</ButtonWrap>
 			</Wrapper>
@@ -58,7 +85,6 @@ const WinnerRound = () => {
 	);
 };
 
-// TODO: Add translation for winner-round
 WinnerRound.getInitialProps = async () => ({
 	namespacesRequired: ["winner-round"],
 });

@@ -18,11 +18,15 @@ const Question = () => {
 	const dispatch = useDispatch();
 
 	const { categoryId, question, loading } = useSelector((state) => state.quiz);
+	const { isAuthenticated } = useSelector((state) => state.auth);
 	const player = useSelector((state) => state.player);
 	const [playing, setPlaying] = useState(false);
 	const isSubmitting = loading === "pending";
 	return (
-		<Layout title="Guest Welcome" headerType="quiz">
+		<Layout
+			title="Guest Welcome"
+			headerType={isAuthenticated ? "quiz" : "quiz-no-menu"}
+		>
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>
 					{categoryId === 1 && t("how-would")}

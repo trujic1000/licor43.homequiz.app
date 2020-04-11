@@ -18,7 +18,6 @@ const Lobby = () => {
 	);
 };
 
-//TODO: Add translations for lobby
 Lobby.getInitialProps = async () => ({
 	namespacesRequired: ["lobby"],
 });

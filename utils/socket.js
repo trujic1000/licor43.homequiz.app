@@ -7,8 +7,11 @@ import {
 	status,
 	setConnectionStatus,
 	addPlayer,
+	setCategoryId,
 	removePlayer,
 	setQuestion,
+	setAnswers,
+	roundEnded,
 } from "~/slices/quiz";
 import { setId } from "~/slices/player";
 
@@ -61,7 +64,43 @@ export const connectSocket = ({ code, name, role, router, dispatch }) => {
 			console.log("QuestionsEvent: " + JSON.stringify(data, undefined, 2));
 			if (Object.keys(data.question).length > 0) {
 				dispatch(setQuestion(data.question));
+				dispatch(setCategoryId(data.question.category));
 				router.push("/question");
 			}
+		})
+		.listen("VotingEvent", (data) => {
+			console.log("VotingEvent: " + JSON.stringify(data, undefined, 2));
+			dispatch(setAnswers(data.answers));
+			router.push("/vote");
+		})
+		.listen("PlayersPointsEvent", (data) => {
+			console.log("PlayerPointsEvent: " + JSON.stringify(data, undefined, 2));
+			const ranking = data.players.map((player) => ({
+				id: player.id,
+				name: player.name,
+				points: player.points,
+			}));
+			const roundWinner = data.winner;
+			roundWinner.answer = data.winner_answer;
+			const remainingRounds = data.rounds_left;
+			const payload = {
+				ranking,
+				roundWinner,
+				remainingRounds,
+			};
+			dispatch(roundEnded(payload));
+			router.push("/winner-round");
+		})
+		.listen("QuizEndedEvent", (data) => {
+			console.log("QuizEndedEvent: " + JSON.stringify(data, undefined, 2));
+			// if (quiz.username === data.winner.name) {
+			//   console.log(
+			//     'redirecting to winner quiz',
+			//     quiz.username === data.winner.name
+			//   );
+			//   router.push('/quiz/winner-quiz');
+			// } else {
+			//   router.push('/quiz/ranking');
+			// }
 		});
 };

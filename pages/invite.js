@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
@@ -8,7 +8,6 @@ import Link, { StyledLink } from "~/components/link";
 
 const Invite = () => {
 	const { t } = useTranslation("invite", { i18n });
-	const dispatch = useDispatch();
 	const code = useSelector((state) => state.quiz.code);
 	return (
 		<Layout title="Terms and Conditions" headerType="quiz-no-menu">

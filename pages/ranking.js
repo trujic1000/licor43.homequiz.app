@@ -1,58 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
 import Icon from "~/components/icon";
 import Link from "~/components/link";
-
-const ranking = [
-	{
-		id: 0,
-		name: "William",
-		points: 8,
-	},
-	{
-		id: 1,
-		name: "Jack",
-		points: 10,
-	},
-	{
-		id: 2,
-		name: "Jake",
-		points: 4,
-	},
-	{
-		id: 3,
-		name: "John",
-		points: 1,
-	},
-	{
-		id: 4,
-		name: "Mark",
-		points: 6,
-	},
-	{
-		id: 5,
-		name: "Charlie",
-		points: 8,
-	},
-	{
-		id: 6,
-		name: "Jacob",
-		points: 10,
-	},
-	{
-		id: 7,
-		name: "Alex",
-		points: 7,
-	},
-];
+import { nextQuestion } from "~/slices/quiz";
 
 const Ranking = () => {
 	const { t } = useTranslation("ranking", { i18n });
+	const dispatch = useDispatch();
+	const { ranking, winner } = useSelector((state) => state.quiz);
+	const { isAuthenticated } = useSelector((state) => state.auth);
+	const { role } = useSelector((state) => state.player);
+
+	const rankingSorted = [...ranking].sort((a, b) => b.points - a.points);
 	return (
-		<Layout title="Round Winner" headerType="quiz">
+		<Layout
+			title="Round Winner"
+			headerType={isAuthenticated ? "quiz" : "quiz-no-menu"}
+		>
 			<Wrapper style={{ height: "calc(100rvh - 140px)" }}>
 				<Heading>
 					<span className="text-white" style={{ fontSize: 36 }}>
@@ -60,16 +28,23 @@ const Ranking = () => {
 					</span>
 				</Heading>
 				<RankingWrap>
-					{ranking
-						.sort((a, b) => b.points - a.points)
-						.map((user) => (
-							<div className="ranking-item" key={user.id}>
-								<span className="ranking-item__text">{user.name}</span>
-								<div className="ranking-item__points">{user.points}</div>
-							</div>
-						))}
+					{rankingSorted.map((user) => (
+						<div className="ranking-item" key={user.id}>
+							<span className="ranking-item__text">{user.name}</span>
+							<div className="ranking-item__points">{user.points}</div>
+						</div>
+					))}
 				</RankingWrap>
-				<Link href="/lobby">Take the next question</Link>
+				{Object.keys(winner).length > 0 ? (
+					<Link href="/claim-price">{t("share-with-your-friends")}</Link>
+				) : (
+					<Link
+						href={role === "HOST" ? "/category" : "/lobby"}
+						onClick={() => dispatch(nextQuestion())}
+					>
+						{t("take-the-next-question")}
+					</Link>
+				)}
 			</Wrapper>
 		</Layout>
 	);

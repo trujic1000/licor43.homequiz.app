@@ -22,10 +22,9 @@ let initialState = {
 	answer: "",
 	answers: [],
 	numberOfPlayers: 0,
-	remainingVotes: null,
-	remainingRounds: null,
+	remainingRounds: 15,
 	roundWinner: {},
-	winner: null,
+	winner: {},
 	ranking: [],
 	loading: "idle",
 	error: null,
@@ -107,9 +106,27 @@ export const answerQuestion = createAsyncThunk(
 				router.push("/lobby");
 			}
 			return {
-				remainingVotes: response.left,
 				lobbyText: "waiting-for-other-players-to-vote",
 				answer: data.answer,
+			};
+		} catch (error) {
+			return rejectWithValue(error.response);
+		}
+	}
+);
+
+export const vote = createAsyncThunk(
+	"quiz/vote",
+	async ({ data, router }, { rejectWithValue }) => {
+		try {
+			const response = await quizAPI.vote(data);
+			if (response.left === 0) {
+				router.push("/winner-round");
+			} else {
+				router.push("/lobby");
+			}
+			return {
+				lobbyText: "waiting-for-other-players-to-vote",
 			};
 		} catch (error) {
 			return rejectWithValue(error.response);
@@ -137,6 +154,14 @@ const quiz = createSlice({
 		},
 		setQuestion: (state, action) => {
 			state.question = action.payload;
+		},
+		setAnswers: (state, action) => {
+			state.answers = [...action.payload];
+		},
+		roundEnded: (state, { payload }) => {
+			state.ranking = payload.ranking;
+			state.roundWinner = payload.roundWinner;
+			state.remainingRounds = payload.remainingRounds;
 		},
 		nextQuestion: (state) => {
 			state.lobbyText = "waiting-for-the-host-to-choose-a-new-category";
@@ -212,6 +237,26 @@ const quiz = createSlice({
 				};
 			}
 		},
+		[vote.pending]: (state, action) => {
+			if (state.loading === "idle") {
+				state.loading = "pending";
+				state.error = null;
+			}
+		},
+		[vote.fulfilled]: (state, { payload }) => {
+			if (state.loading === "pending") {
+				state.loading = "idle";
+				state.lobbyText = payload.lobbyText;
+			}
+		},
+		[vote.rejected]: (state, action) => {
+			if (state.loading === "pending") {
+				state.loading = "idle";
+				state.error = {
+					message: "Failed to vote for the question",
+				};
+			}
+		},
 	},
 });
 
@@ -220,6 +265,8 @@ export const {
 	removePlayer,
 	setCategoryId,
 	setQuestion,
+	setAnswers,
+	roundEnded,
 	nextQuestion,
 	setConnectionStatus,
 } = quiz.actions;
