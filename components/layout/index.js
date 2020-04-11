@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
-import Menu from "~/components/header/Menu";
 import { ToastContainer } from "react-toastify";
-
+import Menu from "~/components/header/Menu";
 import { Header, HeaderQuiz, HeaderHome } from "../header";
+import { initGA, logPageView } from "~/utils/analytics";
+import { useEffect } from "react";
 
 // TODO: Add Google Analytics
 const Layout = ({ title, headerType, children }) => {
+	useEffect(() => {
+		if (!window.GA_INITIALIZED) {
+			initGA();
+			window.GA_INITIALIZED = true;
+		}
+		logPageView();
+	}, []);
+
 	return (
 		<>
 			<Head>
