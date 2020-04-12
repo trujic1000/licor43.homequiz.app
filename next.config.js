@@ -14,7 +14,7 @@ const nextConfig = {
 		STORAGE_URL: "https://admin.homequiz.app/storage",
 	},
 	workboxOpts: {
-		swDest: "static/service-worker.js",
+		swDest: "service-worker.js",
 		runtimeCaching: [
 			{
 				urlPattern: /[.](png|jpg|ico|css)/,
