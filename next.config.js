@@ -4,6 +4,7 @@ const withImages = require("next-images");
 const withOffline = require("next-offline");
 
 const nextConfig = {
+	target: "server",
 	webpack: (config) => {
 		config.resolve.alias["~"] = path.resolve(__dirname);
 		return config;
