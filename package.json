@@ -37,9 +37,8 @@
 	},
 	"scripts": {
 		"dev": "node server.js",
-		"start": "cross-env NODE_ENV=production node server.js",
-		"lint": "eslint components",
 		"build": "next build",
+		"start": "cross-env NODE_ENV=production node server.js",
 		"build:server": "NEXT_TARGET=server next build",
 		"export:server": "NEXT_TARGET=server next export",
 		"export": "npm run build:server && npm run export:server",
