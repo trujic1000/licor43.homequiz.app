@@ -55,6 +55,7 @@ const theme = {
 		large: "812px",
 	},
 };
+
 const fontFaces = css`
 	@font-face {
 		font-family: "Hurme Geometric";

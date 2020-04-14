@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { toast } from "react-toastify";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
+import Icon from "~/components/icon";
 import Link, { StyledLink } from "~/components/link";
 
 const Invite = () => {
@@ -17,6 +20,19 @@ const Invite = () => {
 					<span>{t("the-basics")}</span>
 				</Heading>
 				<CodeWrapper>
+					<CopyToClipboard text={code}>
+						<button
+							className="copy-to-clipboard"
+							onClick={() => {
+								toast(`Code coppied to clipboard`, {
+									type: toast.TYPE.WARNING,
+									autoClose: 1500,
+								});
+							}}
+						>
+							<Icon name="copy" size="20" />
+						</button>
+					</CopyToClipboard>
 					<div className="quiz-share__code">
 						<span className="quiz-share__code-number">{code[0]}</span>
 						<span className="quiz-share__code-number">{code[1]}</span>
@@ -64,6 +80,17 @@ const ButtonWrap = styled.div`
 `;
 
 const CodeWrapper = styled.div`
+	position: relative;
+	.copy-to-clipboard {
+		background: ${(props) => props.theme.colors.primary};
+		border: none;
+		border-radius: 10px;
+		outline: none;
+		padding: 5px 8px;
+		position: absolute;
+		top: -30px;
+		right: 0;
+	}
   .quiz-share__code {
     display: flex;
    justify-content: center;
