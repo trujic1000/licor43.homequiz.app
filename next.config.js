@@ -10,6 +10,7 @@ const nextConfig = {
 		return config;
 	},
 	publicRuntimeConfig: {
+		SITE_URL: "https://mighty-depths-85418.herokuapp.com",
 		BASE_URL: "https://admin.homequiz.app",
 		STORAGE_URL: "https://admin.homequiz.app/storage",
 	},

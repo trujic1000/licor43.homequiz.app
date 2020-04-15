@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
+import { SITE_URL } from "~/utils";
 import { useTranslation, i18n } from "~/i18n";
 import { Wrap100vh, Heading } from "~/components/elements";
 import Layout from "~/components/layout";
@@ -20,13 +21,13 @@ const Invite = () => {
 					<span>{t("the-basics")}</span>
 				</Heading>
 				<CodeWrapper>
-					<CopyToClipboard text={code}>
+					<CopyToClipboard text={`${SITE_URL}/guest-join/${code}`}>
 						<button
 							className="copy-to-clipboard"
 							onClick={() => {
-								toast(`Code coppied to clipboard`, {
+								toast(`Invitation link coppied to clipboard`, {
 									type: toast.TYPE.WARNING,
-									autoClose: 1500,
+									autoClose: 2000,
 								});
 							}}
 						>
@@ -39,17 +40,20 @@ const Invite = () => {
 						<span className="quiz-share__code-number">{code[2]}</span>
 						<span className="quiz-share__code-number">{code[3]}</span>
 					</div>
-					<div className="quiz-share__text">
-						<span>{t("ask-your-friends-to-visit")}</span>
-						<a href="#">Licor43.HomeQuiz.App</a>
-						<span>{t("and-use-the-code-above")}</span>
-					</div>
+					<ol className="quiz-share__text">
+						<li>Copy the invitation link</li>
+						<li>Send it to your friends</li>
+						<li>Wait for them to join</li>
+						<li>Let the game begin!</li>
+						{/* <a href="#">Licor43.HomeQuiz.App</a>
+						<span>{t("and-use-the-code-above")}</span> */}
+					</ol>
 				</CodeWrapper>
 				<ButtonWrap>
 					<StyledLink
 						variant="whatsapp"
 						target="_blank"
-						href={`https://wa.me/?text=https://licor43.homequiz.app/join code: 1234`}
+						href={`https://wa.me/?text=${SITE_URL}/guest-join/${code}`}
 					>
 						{t("share-using-whatsapp")}
 					</StyledLink>
@@ -81,8 +85,11 @@ const ButtonWrap = styled.div`
 
 const CodeWrapper = styled.div`
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	.copy-to-clipboard {
-		background: ${(props) => props.theme.colors.primary};
+		background: ${(props) => props.theme.colors.white};
 		border: none;
 		border-radius: 10px;
 		outline: none;
@@ -109,8 +116,8 @@ const CodeWrapper = styled.div`
   line-height: 1;
 }
 .quiz-share__text {
+	list-style-type: decimal;
   margin-top: 40px;
-  text-align: center;
   color: ${(props) => props.theme.colors.primary};
   span {
     display: block;
