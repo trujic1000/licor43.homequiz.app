@@ -55,7 +55,10 @@ class MyDocument extends Document {
 					<meta name="description" content="The most creative quiz game ever" />
 
 					<meta property="og:type" content="website" />
-					<meta property="og:url" content="https://licor43.homequiz.app/" />
+					<meta
+						property="og:url"
+						content="https://mighty-depths-85418.herokuapp.com/"
+					/>
 					<meta
 						property="og:title"
 						content="Licor43 - The most creative quiz game ever"
@@ -66,13 +69,13 @@ class MyDocument extends Document {
 					/>
 					<meta
 						property="og:image"
-						content="https://licor43.homequiz.app/img/icon-192x192.png"
+						content="https://mighty-depths-85418.herokuapp.com/img/icon-192x192.png"
 					/>
 
 					<meta property="twitter:card" content="summary_large_image" />
 					<meta
 						property="twitter:url"
-						content="https://licor43.homequiz.app/"
+						content="https://mighty-depths-85418.herokuapp.com/"
 					/>
 					<meta
 						property="twitter:title"
@@ -84,7 +87,7 @@ class MyDocument extends Document {
 					/>
 					<meta
 						property="twitter:image"
-						content="https://licor43.homequiz.app/img/icon-192x192.png"
+						content="https://mighty-depths-85418.herokuapp.com/img/icon-192x192.png"
 					/>
 					<meta name="screen-orientation" content="portrait" />
 
