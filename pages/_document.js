@@ -47,9 +47,9 @@ class MyDocument extends Document {
 					<meta name="full-screen" content="yes" />
 					<meta name="browsermode" content="application" />
 
-					<link href="/img/icon-512x512.png" rel="apple-touch-icon" />
-					<link href="/img/icon-512x512.png" rel="apple-touch-startup-image" />
-					<link href="/img/icon-512x512.png" rel="icon" sizes="512x512" />
+					<link href="/img/icon-192x192.png" rel="apple-touch-icon" />
+					<link href="/img/icon-192x192.png" rel="apple-touch-startup-image" />
+					<link href="/img/icon-192x192.png" rel="icon" sizes="192x192" />
 
 					<meta name="title" content="Licor43" />
 					<meta name="description" content="The most creative quiz game ever" />
@@ -69,7 +69,7 @@ class MyDocument extends Document {
 					/>
 					<meta
 						property="og:image"
-						content="https://mighty-depths-85418.herokuapp.com/img/icon-512x512.png"
+						content="https://mighty-depths-85418.herokuapp.com/img/icon-384x384.png"
 					/>
 
 					<meta property="twitter:card" content="summary_large_image" />
@@ -87,7 +87,7 @@ class MyDocument extends Document {
 					/>
 					<meta
 						property="twitter:image"
-						content="https://mighty-depths-85418.herokuapp.com/img/icon-512x512.png"
+						content="https://mighty-depths-85418.herokuapp.com/img/icon-384x384.png"
 					/>
 					<meta name="screen-orientation" content="portrait" />
 

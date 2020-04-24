@@ -33,12 +33,12 @@ const Join = () => {
 				/>
 				<meta
 					property="og:title"
-					content="Licor43 - The most creative quiz game ever"
+					content="Licor43 - You are invited to the quiz"
 				/>
 				<meta property="og:description" content="You are invited to the quiz" />
 				<meta
 					property="og:image"
-					content="https://mighty-depths-85418.herokuapp.com/img/icon-512x512.png"
+					content="https://mighty-depths-85418.herokuapp.com/img/icon-384x384.png"
 				/>
 				<meta property="twitter:card" content="summary_large_image" />
 				<meta
@@ -47,7 +47,7 @@ const Join = () => {
 				/>
 				<meta
 					property="twitter:title"
-					content="Licor43 - The most creative quiz game ever"
+					content="Licor43 - You are invited to the quiz"
 				/>
 				<meta
 					property="twitter:description"
@@ -55,7 +55,7 @@ const Join = () => {
 				/>
 				<meta
 					property="twitter:image"
-					content="https://mighty-depths-85418.herokuapp.com/img/icon-512x512.png"
+					content="https://mighty-depths-85418.herokuapp.com/img/icon-384x384.png"
 				/>
 			</Helmet>
 			<Wrapper style={{ height: "calc(100rvh - 236px)" }}>
