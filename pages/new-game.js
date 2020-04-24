@@ -35,7 +35,9 @@ const NewGame = () => {
 					})}
 					onSubmit={(values) => {
 						const data = {
-							name: values.quizName,
+							quiz_name: values.quizName,
+							// TODO: Fix the layout
+							quiz_rounds: 5,
 						};
 						clearErrors();
 						dispatch(createQuiz({ data, router }));
