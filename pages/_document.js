@@ -47,12 +47,9 @@ class MyDocument extends Document {
 					<meta name="full-screen" content="yes" />
 					<meta name="browsermode" content="application" />
 
-					<link href="/img/icons/icon-192x192.png" rel="apple-touch-icon" />
-					<link
-						href="/img/icons/icon-192x192.png"
-						rel="apple-touch-startup-image"
-					/>
-					<link href="/img/icons/icon-192x192.png" rel="icon" sizes="192x192" />
+					<link href="/img/icon-192x192.png" rel="apple-touch-icon" />
+					<link href="/img/icon-192x192.png" rel="apple-touch-startup-image" />
+					<link href="/img/icon-192x192.png" rel="icon" sizes="192x192" />
 
 					<meta name="title" content="Licor43" />
 					<meta name="description" content="The most creative quiz game ever" />

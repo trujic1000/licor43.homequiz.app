@@ -11,7 +11,7 @@ import menuBg from "~/assets/img/menu-bg.png";
 const Menu = () => {
 	const [open, toggle] = useState(false);
 	const { t } = useTranslation("menu", { i18n });
-	const user = useSelector((state) => state.auth.user);
+	const { user } = useSelector((state) => state.auth);
 	return (
 		<>
 			<Hamburger open={open} toggle={toggle} />

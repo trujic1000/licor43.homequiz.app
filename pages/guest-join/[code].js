@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -22,6 +23,38 @@ const Join = () => {
 	const isSubmitting = loading === "pending";
 	return (
 		<Layout title="Guest Join" headerType="welcome">
+			<Helmet>
+				<meta name="description" content="You are invited to the quiz" />
+				<meta property="og:type" content="website" />
+				{/* <meta property="og:url" content="https://licor43.homequiz.app/" /> */}
+				<meta
+					property="og:url"
+					content="https://mighty-depths-85418.herokuapp.com/"
+				/>
+				<meta
+					property="og:title"
+					content="Licor43 - The most creative quiz game ever"
+				/>
+				<meta property="og:description" content="You are invited to the quiz" />
+				<meta
+					property="og:image"
+					content="https://licor43.homequiz.app/img/icon-192x192.png"
+				/>
+				<meta property="twitter:card" content="summary_large_image" />
+				<meta property="twitter:url" content="https://licor43.homequiz.app/" />
+				<meta
+					property="twitter:title"
+					content="Licor43 - The most creative quiz game ever"
+				/>
+				<meta
+					property="twitter:description"
+					content="You are invited to the quiz"
+				/>
+				<meta
+					property="twitter:image"
+					content="https://licor43.homequiz.app/img/icon-192x192.png"
+				/>
+			</Helmet>
 			<Wrapper style={{ height: "calc(100rvh - 236px)" }}>
 				<Heading>{t("common:welcome")}</Heading>
 				<span className="text-big">{t("you-have-been-invited")}</span>

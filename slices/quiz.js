@@ -55,6 +55,7 @@ export const createQuiz = createAsyncThunk(
 				code: response.code,
 			};
 		} catch (error) {
+			console.log("error", error.response);
 			return rejectWithValue(error.response);
 		}
 	}
@@ -148,6 +149,9 @@ const quiz = createSlice({
 			);
 			state.players.splice(index, 1);
 			state.numberOfPlayers--;
+		},
+		clearErrors: (state, action) => {
+			state.error = null;
 		},
 		setCategoryId: (state, action) => {
 			state.categoryId = action.payload;
@@ -266,6 +270,7 @@ const quiz = createSlice({
 export const {
 	addPlayer,
 	removePlayer,
+	clearErrors,
 	setCategoryId,
 	setQuestion,
 	setAnswers,

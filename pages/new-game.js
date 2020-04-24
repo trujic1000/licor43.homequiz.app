@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { createQuiz } from "~/slices/quiz";
+import { createQuiz, clearErrors } from "~/slices/quiz";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useTranslation, i18n } from "~/i18n";
@@ -20,7 +20,7 @@ const NewGame = () => {
 	const { t } = useTranslation("new-game", { i18n });
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const { loading } = useSelector((state) => state.quiz);
+	const { loading, error } = useSelector((state) => state.quiz);
 
 	const isSubmitting = loading === "pending";
 	return (
@@ -37,6 +37,7 @@ const NewGame = () => {
 						const data = {
 							name: values.quizName,
 						};
+						clearErrors();
 						dispatch(createQuiz({ data, router }));
 					}}
 					validateOnChange={false}
@@ -51,14 +52,13 @@ const NewGame = () => {
 							<div>
 								<TextField
 									name="quizName"
-									className={errors.name ? "invalid" : null}
+									className={errors.name || error ? "invalid" : null}
 									placeholder={t("new-game-name") + "*"}
 									autoComplete="new-password"
 								/>
 								<ErrorMessage>
-									{errors.quizName ? (
-										<span>{"*" + errors.quizName}</span>
-									) : null}
+									{errors.quizName && <span>{"*" + errors.quizName}</span>}
+									{error && <span>{error.message}</span>}
 								</ErrorMessage>
 							</div>
 							<StyledLink as="button" type="submit" disabled={isSubmitting}>
