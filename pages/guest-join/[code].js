@@ -22,14 +22,14 @@ const Join = () => {
 	const loading = useSelector((state) => state.quiz.loading);
 	const isSubmitting = loading === "pending";
 	return (
-		<>
+		<Layout title="Guest Join" headerType="welcome">
 			<Helmet>
 				<meta name="description" content="You are invited to the quiz" />
 				<meta property="og:type" content="website" />
 				{/* <meta property="og:url" content="https://licor43.homequiz.app/" /> */}
 				<meta
 					property="og:url"
-					content="https://mighty-depths-85418.herokuapp.com/"
+					content="https://mighty-depths-85418.herokuapp.com/guest-join/"
 				/>
 				<meta
 					property="og:title"
@@ -43,7 +43,7 @@ const Join = () => {
 				<meta property="twitter:card" content="summary_large_image" />
 				<meta
 					property="twitter:url"
-					content="https://mighty-depths-85418.herokuapp.com/"
+					content="https://mighty-depths-85418.herokuapp.com/guest-join/"
 				/>
 				<meta
 					property="twitter:title"
@@ -58,41 +58,39 @@ const Join = () => {
 					content="https://mighty-depths-85418.herokuapp.com/img/icon-384x384.png"
 				/>
 			</Helmet>
-			<Layout title="Guest Join" headerType="welcome">
-				<Wrapper style={{ height: "calc(100rvh - 236px)" }}>
-					<Heading>{t("common:welcome")}</Heading>
-					<span className="text-big">{t("you-have-been-invited")}</span>
-					<span className="text-medium">
-						{t("please")}{" "}
-						<span className="text-white">{t("insert-game-code")}</span>
-					</span>
-					<ReactCodeInput
-						forceUppercase
-						value={code}
-						onChange={(code) => setCode(code)}
-						autoFocus
-					/>
-					<StyledLink
-						as="button"
-						type="submit"
-						disabled={isSubmitting}
-						onClick={() => {
-							const data = {
-								name: "",
-								code,
-							};
-							dispatch(joinQuiz({ data, router }));
-						}}
-					>
-						{isSubmitting ? (
-							<Icon name="spinner" size="14" />
-						) : (
-							<span>{t("common:join-the-game")}</span>
-						)}
-					</StyledLink>
-				</Wrapper>
-			</Layout>
-		</>
+			<Wrapper style={{ height: "calc(100rvh - 236px)" }}>
+				<Heading>{t("common:welcome")}</Heading>
+				<span className="text-big">{t("you-have-been-invited")}</span>
+				<span className="text-medium">
+					{t("please")}{" "}
+					<span className="text-white">{t("insert-game-code")}</span>
+				</span>
+				<ReactCodeInput
+					forceUppercase
+					value={code}
+					onChange={(code) => setCode(code)}
+					autoFocus
+				/>
+				<StyledLink
+					as="button"
+					type="submit"
+					disabled={isSubmitting}
+					onClick={() => {
+						const data = {
+							name: "",
+							code,
+						};
+						dispatch(joinQuiz({ data, router }));
+					}}
+				>
+					{isSubmitting ? (
+						<Icon name="spinner" size="14" />
+					) : (
+						<span>{t("common:join-the-game")}</span>
+					)}
+				</StyledLink>
+			</Wrapper>
+		</Layout>
 	);
 };
 
