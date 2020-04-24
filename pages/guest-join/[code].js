@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -23,7 +24,7 @@ const Join = () => {
 	const isSubmitting = loading === "pending";
 	return (
 		<Layout title="Guest Join" headerType="welcome">
-			<Helmet>
+			<Head>
 				<meta name="description" content="You are invited to the quiz" />
 				<meta property="og:type" content="website" />
 				{/* <meta property="og:url" content="https://licor43.homequiz.app/" /> */}
@@ -57,7 +58,7 @@ const Join = () => {
 					property="twitter:image"
 					content="https://mighty-depths-85418.herokuapp.com/img/icon-384x384.png"
 				/>
-			</Helmet>
+			</Head>
 			<Wrapper style={{ height: "calc(100rvh - 236px)" }}>
 				<Heading>{t("common:welcome")}</Heading>
 				<span className="text-big">{t("you-have-been-invited")}</span>
