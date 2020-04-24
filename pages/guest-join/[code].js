@@ -38,7 +38,7 @@ const Join = () => {
 				<meta property="og:description" content="You are invited to the quiz" />
 				<meta
 					property="og:image"
-					content="https://mighty-depths-85418.herokuapp.com/img/icon-192x192.png"
+					content="https://mighty-depths-85418.herokuapp.com/img/icon-512x512.png"
 				/>
 				<meta property="twitter:card" content="summary_large_image" />
 				<meta
@@ -55,7 +55,7 @@ const Join = () => {
 				/>
 				<meta
 					property="twitter:image"
-					content="https://mighty-depths-85418.herokuapp.com/img/icon-192x192.png"
+					content="https://mighty-depths-85418.herokuapp.com/img/icon-512x512.png"
 				/>
 			</Helmet>
 			<Wrapper style={{ height: "calc(100rvh - 236px)" }}>
